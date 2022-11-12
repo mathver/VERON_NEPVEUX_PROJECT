@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "veron-nepveux-project"
+version = "0.1.0"
+description = ""
+authors = ["Mathieu <mathieuveron@outlook.fr>"]
+readme = "README.md"
+packages = [{include = "veron_nepveux_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
