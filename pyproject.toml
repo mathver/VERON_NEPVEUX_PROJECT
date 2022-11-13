@@ -10,6 +10,13 @@ packages = [{include = "veron_nepveux_project"}]
 python = "^3.11"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+mypy = "^0.990"
+black = "^22.10.0"
+pylama = "^8.4.1"
+pytest-cov = "^4.0.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
