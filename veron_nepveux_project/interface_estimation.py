@@ -95,7 +95,8 @@ class Ui_MainWindow(object):
 
         self.comboBox_couleur = QComboBox(self.layoutWidget_2)
         self.comboBox_couleur.setObjectName("comboBox_couleur")
-        self.comboBox_couleur.addItems(("Grise","Noire","Blanche"))
+        self.comboBox_couleur.addItems(('Blanc', 'Gris', 'Noir', 'Bleu', 'Rouge', 'Orange', 'Jaune',
+       'Vert', 'Sable', 'Brun'))
         self.gridLayout.addWidget(self.comboBox_couleur, 3, 1, 1, 1)
 
         self.label_couleur = QLabel(self.layoutWidget_2)
