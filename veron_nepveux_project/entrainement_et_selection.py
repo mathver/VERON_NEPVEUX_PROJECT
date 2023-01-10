@@ -29,8 +29,8 @@ class Dataframes:
     y_tr: np.ndarray
     y_te : np.ndarray
 
-def remplit_class(fichier : str = "donnees.json") -> Dataframes:
-    X,y = data_frame_modele(fichier)
+def remplit_class(fichier : str = "donnees_peugeot.json") -> Dataframes:
+    X, y = data_frame_modele(fichier)
     X_tr, X_te, y_tr, y_te = train_test_split(X, y)
     return Dataframes(
         X= X,
@@ -42,7 +42,6 @@ def remplit_class(fichier : str = "donnees.json") -> Dataframes:
     )
 
 def elastic_net(X_tr : np.ndarray, y_tr : np.ndarray):
-    
     en = ElasticNet()
     en_gs = GridSearchCV(
     en,
@@ -52,10 +51,9 @@ def elastic_net(X_tr : np.ndarray, y_tr : np.ndarray):
     }   
     )
     en_gs.fit(X_tr, y_tr) 
-    return en_gs.best_estimator_,en_gs.best_score_, en_gs.cv_results_
+    return en_gs.best_estimator_, en_gs.best_score_, en_gs.cv_results_
 
 def knn(X_tr : np.ndarray, y_tr : np.ndarray):
-    
     knr = KNeighborsRegressor()
     knr_gs = GridSearchCV(
         knr,
@@ -65,10 +63,9 @@ def knn(X_tr : np.ndarray, y_tr : np.ndarray):
         }
     )
     knr_gs.fit(X_tr, y_tr)
-    return knr_gs.best_estimator_,knr_gs.best_score_, knr_gs.cv_results_
+    return knr_gs.best_estimator_, knr_gs.best_score_, knr_gs.cv_results_
 
 def rd_foret(X_tr : np.ndarray, y_tr : np.ndarray):
-    
     rfr = RandomForestRegressor()
     rfr_gs = GridSearchCV(
         rfr,
@@ -80,7 +77,6 @@ def rd_foret(X_tr : np.ndarray, y_tr : np.ndarray):
     return rfr_gs.best_estimator_,rfr_gs.best_score_, rfr_gs.cv_results_
 
 def svr_(X_tr : np.ndarray, y_tr : np.ndarray):
-    
     svr = SVR()
     svr_gs = GridSearchCV(
         svr,
@@ -94,7 +90,6 @@ def svr_(X_tr : np.ndarray, y_tr : np.ndarray):
     return svr_gs.best_estimator_,svr_gs.best_score_, svr_gs.cv_results_
 
 def multi_layer_regressor(X_tr : np.ndarray, y_tr : np.ndarray):
-    
     pln = Pipeline(
         [
             ("mise_echelle", MinMaxScaler()),
@@ -110,9 +105,9 @@ def multi_layer_regressor(X_tr : np.ndarray, y_tr : np.ndarray):
     )
     pln_gs.fit(X_tr, y_tr)
     
-    return pln_gs.best_estimator_,pln_gs.best_score_, pln_gs.cv_results_
+    return pln_gs.best_estimator_, pln_gs.best_score_, pln_gs.cv_results_
  
-def selection_modele(fichier: str = "donnees.json"):
+def selection_modele(fichier: str = "donnees_peugeot.json"):
     dfs = remplit_class(fichier)
     pln_gs_be,pln_gs_bs,pln_gs_cv = multi_layer_regressor(dfs.X_tr,dfs.y_tr)
     svr_gs_be,svr_gs_bs,svr_gs_cv = svr_(dfs.X_tr,dfs.y_tr)
@@ -130,4 +125,7 @@ def selection_modele(fichier: str = "donnees.json"):
             dict_modeles
         )
     )
-    return meilleur_estimateur,dict_modeles[max(dict_modeles)]
+    return meilleur_estimateur, dict_modeles[max(dict_modeles)]
+
+t1, t2 = selection_modele()
+print(t1, t2)
