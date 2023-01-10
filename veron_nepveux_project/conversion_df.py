@@ -45,6 +45,7 @@ def data_frame_imputation(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFra
     return(df)
 
 def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+    df_marque = pd.get_dummies(df["marque"])
     df_mod = pd.get_dummies(df["modele"])
     df_garkil = pd.get_dummies(df["garantie_kilometrage"])
     df_carbu = pd.get_dummies(df["carburant"])
@@ -55,6 +56,7 @@ def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     df_gar = pd.get_dummies(df["garantie"])
     df_utilprec = pd.get_dummies(df["utilisation_prec"])
     df = pd.concat([df, df_mod, df_garkil, df_carbu, df_bdv, df_couleur, df_sil,df_trans, df_gar, df_utilprec], axis = 1)
+    del df['marque']
     del df['modele']
     del df['garantie_kilometrage']
     del df['carburant']
