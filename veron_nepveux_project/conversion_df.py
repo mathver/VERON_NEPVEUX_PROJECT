@@ -17,9 +17,9 @@ def data_frame(fichier : str = "donnees.json", modele_choisi : str = "non"):
     df = ouverture_fichier(fichier)
     reconstitue = reconstitution_fichier(df)
     df_panda = dataframe_pandas(reconstitue)
-    data_dumm = data_frame_dummies(df_panda)
-    data_no_NA = data_frame_sans_NA(data_dumm)
-    return data_frame_sklearn(data_no_NA)
+    df_impute = data_frame_imputation(df_panda)
+    data_fin = data_frame_dummies(df_impute)
+    return data_frame_sklearn(data_fin)
 
 def ouverture_fichier(donnees ="donnees.json") :
     with open(donnees, "r") as fichier:
@@ -36,7 +36,7 @@ def dataframe_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
         pd.DataFrame(fichier)
     )
 
-def data_frame_sans_NA(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+def data_frame_imputation(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     df.replace('NA', np.NaN)
     df = DataFrameImputer().fit_transform(df)
     return(df)
@@ -70,7 +70,6 @@ def data_frame_sklearn(df : pd.core.frame.DataFrame) -> dict:
         {'X': df.loc[:, df.columns != 'prix'].to_numpy(), 'y' : df['prix'].to_numpy(), 'df_entier': df.to_numpy()}
     )
     
-
 class DataFrameImputer(TransformerMixin):
 
     def __init__(self):
@@ -92,5 +91,3 @@ class DataFrameImputer(TransformerMixin):
 
     def transform(self, df, y=None):
         return df.fillna(self.fill)
-
-#df = DataFrameImputer().fit_transform(df)
