@@ -13,31 +13,33 @@ import pandas as pd
 from sklearn.base import TransformerMixin
 
 
-def data_frame(fichier : str = "donnees.json", modele_choisi : str = "non"):
-    df = ouverture_fichier(fichier)
-    reconstitue = reconstitution_fichier(df)
-    df_panda = dataframe_pandas(reconstitue)
+def data_frame_modele(fichier : str = "donnees.json", modele_choisi : str = "non"):
+    df_panda = data_frame_pandas(fichier)
     df_impute = data_frame_imputation(df_panda)
     data_fin = data_frame_dummies(df_impute)
     return data_frame_sklearn(data_fin)
 
-def ouverture_fichier(donnees ="donnees.json") :
+def _ouverture_fichier(donnees ="donnees.json") :
     with open(donnees, "r") as fichier:
         contenu_fichier = fichier.read()
     return contenu_fichier
 
-def reconstitution_fichier(fichier = "donnees.json")-> list[Voiture]:
+def _reconstitution_fichier(df: str)-> list[Voiture]:
     return(
-        from_json(list[Voiture],fichier)
+        from_json(list[Voiture], df)
     )
 
-def dataframe_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
+def data_frame_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
+    df = _ouverture_fichier(fichier)
+    df = _reconstitution_fichier(df)
+    df = pd.DataFrame(df)
+    df = data_frame_imputation(df)
     return(
-        pd.DataFrame(fichier)
+        df
     )
 
 def data_frame_imputation(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-    df.replace('NA', np.NaN)
+    df = df.replace('NA', np.NaN)
     df = DataFrameImputer().fit_transform(df)
     return(df)
 
