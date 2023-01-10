@@ -38,6 +38,7 @@ def data_frame_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
         df
     )
 
+
 def data_frame_imputation(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     df = df.replace('NA', np.NaN)
     df = DataFrameImputer().fit_transform(df)
