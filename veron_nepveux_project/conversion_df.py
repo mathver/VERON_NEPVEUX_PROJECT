@@ -24,14 +24,14 @@ def _ouverture_fichier(donnees ="donnees.json") :
         contenu_fichier = fichier.read()
     return contenu_fichier
 
-def _reconstitution_fichier(df: str)-> list[Voiture]:
+def _reconstitution_fichier(contenu: str)-> list[Voiture]:
     return(
-        from_json(list[Voiture], df)
+        from_json(list[Voiture], contenu)
     )
 
 def data_frame_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
-    df = _ouverture_fichier(fichier)
-    df = _reconstitution_fichier(df)
+    contenu = _ouverture_fichier(fichier)
+    df = _reconstitution_fichier(contenu)
     df = pd.DataFrame(df)
     df = data_frame_imputation(df)
     return(

@@ -13,6 +13,7 @@ from time import sleep
 @serde
 @dataclass
 class Voiture:
+    marque: str
     modele: str
     carburant: str
     prix: int
@@ -42,9 +43,9 @@ def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver):
     button.click()
 
 
-def recolt_data(driver):
+def recolt_data(driver, marque):
     car_list = list()
-    for i in range(1,601):
+    for i in range(1,6):
         if i % 12 == 0:
             driver.find_element(By.CSS_SELECTOR, '#see-more-results > .tags-and-alerts-button-text').click()
             sleep(3)
@@ -151,7 +152,7 @@ def recolt_data(driver):
         garantie, date_mise_circulation, puissance, silhouette, nb_places, utilisation_prec,
         puissance_fiscale, critair, ptac, nb_portes)
 
-        car = Voiture(modele, carburant, prix, kilometrage, garantie_kilometrage, boite_de_vitesse, transmission, couleur,
+        car = Voiture(marque, modele, carburant, prix, kilometrage, garantie_kilometrage, boite_de_vitesse, transmission, couleur,
         garantie, date_mise_circulation, puissance, silhouette, nb_places, utilisation_prec,
         puissance_fiscale, critair, ptac, nb_portes)
         car_list.append(car)    
@@ -269,7 +270,7 @@ def formalisation(modele, carburant, prix, kilometrage, garantie_kilometrage, bo
         puissance_fiscale, critair, ptac, nb_portes)
 
 
-def acces_site(URL):
+def scrap_marque(URL: str, marque: str):
     driver = webdriver.Chrome()
     driver.maximize_window()
     driver.get(URL)
@@ -278,10 +279,11 @@ def acces_site(URL):
     sleep(3)
     driver.find_element(By.ID, 'search-input-filter-home').click()
     sleep(2)
-    driver.find_element(By.ID, 'search-input-filter-home').send_keys("Peugeot" + Keys.ENTER)
+    driver.find_element(By.ID, 'search-input-filter-home').send_keys(f"{marque}" + Keys.ENTER)
     sleep(5)
     driver.find_element(By.ID, 'count').click()
     sleep(5)
     driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-    resultat = recolt_data(driver)
-    return(resultat)
+    resultat = recolt_data(driver, marque)
+    f = open(f"donnees_{marque}.json", "w")
+    f.write(to_json(resultat))
