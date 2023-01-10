@@ -1,6 +1,6 @@
 """
 Librairie permettant la création d'une interface graphique pour l'interaction utilisateur et l'estimation du prix de son véhicule.
-"""
+""" 
 
 from PyQt6 import QtCore, QtGui
 import sys
@@ -15,12 +15,12 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QCheckBox,
     QApplication,
-    QMainWindow,
-    QMessageBox,
+    QMainWindow
 )
 import os
 from PyQt6.QtCore import QRect, QProcess
 from entrainement_et_selection import prix_predit_voiture
+from rich import print
 
 
 class Ui_MainWindow(object):
@@ -435,7 +435,7 @@ class Ui_MainWindow(object):
             nb_portes,
         )
         print(
-            f"Le prix prédit est {prix_pred} €, alors que le prix réel est de {prix_reel} €, soit une différence de {abs(prix_reel - prix_pred)}"
+            f"Le prix prédit est {prix_pred} €, alors que le prix réel est de {prix_reel} €, soit une différence de {abs(prix_reel - prix_pred)} €"
         )
 
 
