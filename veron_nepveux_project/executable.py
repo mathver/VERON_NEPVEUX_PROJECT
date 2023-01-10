@@ -5,15 +5,17 @@ import typer
 from scrapping import acces_site
 import interface_estimation
 
-URL = 'https://www.spoticar.fr'
+URL = "https://www.spoticar.fr"
 
 app = typer.Typer(pretty_exceptions_show_locals=True)
+
 
 @app.callback()
 def callback():
     """
     This application allows the user to scrap data about car on the car seller Spoticar and to test the price of its own against the market.
     """
+
 
 @app.command()
 def scrapping():
@@ -23,6 +25,7 @@ def scrapping():
     """
     acces_site()
 
+
 @app.command()
 def estimating():
     """
@@ -30,5 +33,6 @@ def estimating():
     """
     interface_estimation.app()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app()
