@@ -68,10 +68,9 @@ def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     
 
 def data_frame_sklearn(df : pd.core.frame.DataFrame) -> dict:
-    
-    return(
-        {'X': df.loc[:, df.columns != 'prix'].to_numpy(), 'y' : df['prix'].to_numpy(), 'df_entier': df.to_numpy()}
-    )
+    X = df.loc[:, df.columns != 'prix'].to_numpy() # tout sauf le prix
+    y = df['prix'].to_numpy()
+    return X, y
     
 class DataFrameImputer(TransformerMixin):
 
