@@ -24,14 +24,14 @@ def _ouverture_fichier(donnees ="donnees.json") :
         contenu_fichier = fichier.read()
     return contenu_fichier
 
-def _reconstitution_fichier(df: str)-> list[Voiture]:
+def _reconstitution_fichier(contenu: str)-> list[Voiture]:
     return(
-        from_json(list[Voiture], df)
+        from_json(list[Voiture], contenu)
     )
 
 def data_frame_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
-    df = _ouverture_fichier(fichier)
-    df = _reconstitution_fichier(df)
+    contenu = _ouverture_fichier(fichier)
+    df = _reconstitution_fichier(contenu)
     df = pd.DataFrame(df)
     df = data_frame_imputation(df)
     return(
@@ -44,7 +44,9 @@ def data_frame_imputation(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFra
     df = DataFrameImputer().fit_transform(df)
     return(df)
 
+
 def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+    df_marque = pd.get_dummies(df["marque"])
     df_mod = pd.get_dummies(df["modele"])
     df_garkil = pd.get_dummies(df["garantie_kilometrage"])
     df_carbu = pd.get_dummies(df["carburant"])
@@ -54,7 +56,8 @@ def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     df_trans = pd.get_dummies(df["transmission"])
     df_gar = pd.get_dummies(df["garantie"])
     df_utilprec = pd.get_dummies(df["utilisation_prec"])
-    df = pd.concat([df, df_mod, df_garkil, df_carbu, df_bdv, df_couleur, df_sil,df_trans, df_gar, df_utilprec], axis = 1)
+    df = pd.concat([df, df_marque, df_mod, df_garkil, df_carbu, df_bdv, df_couleur, df_sil,df_trans, df_gar, df_utilprec], axis = 1)
+    del df['marque']
     del df['modele']
     del df['garantie_kilometrage']
     del df['carburant']
@@ -86,7 +89,7 @@ class DataFrameImputer(TransformerMixin):
     def fit(self, df, y=None):
 
         self.fill = pd.Series([df[c].value_counts().index[0]
-            if df[c].dtype == np.dtype('O') else df[c].mean().round(0) for c in df],
+            if df[c].dtype == np.dtype('O') else df[c].mean() for c in df],
             index=df.columns)
 
         return self
