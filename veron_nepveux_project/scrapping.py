@@ -1,3 +1,7 @@
+"""
+Librairie de scrapping permettant la récupération de données sur le site spoticar pour différentes marques de voiture, et transformant les données en fichier .json. 
+"""
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys

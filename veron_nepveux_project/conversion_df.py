@@ -1,8 +1,8 @@
 """
 Description : 
 
-Librairie python permettant la création et la modification d'un data frame utilisable 
-par la bibliothèque sklearn
+Librairie python permettant la création et la modification d'un dataframe utilisable 
+par la bibliothèque sklearn à partir des données scrapper précedemment.
 
 """
 

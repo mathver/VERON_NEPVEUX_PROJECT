@@ -1,3 +1,7 @@
+"""
+Librairie qui permet la création d'une interface en ligne de commande pour l'ensemble du programme.
+"""
+
 from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
 import os

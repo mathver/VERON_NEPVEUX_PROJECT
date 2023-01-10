@@ -1,7 +1,7 @@
 """
 Description : 
 
-Librairie ayant pour but d'entrainer et de selectionner le modèle le plus adéquat pour les données
+Librairie ayant pour but d'entrainer et de sélectionner le modèle le plus adéquat pour les données.
 """
 import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV

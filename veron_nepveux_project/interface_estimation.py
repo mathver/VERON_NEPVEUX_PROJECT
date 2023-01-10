@@ -1,3 +1,7 @@
+"""
+Librairie permettant la création d'une interface graphique pour l'interaction utilisateur et l'estimation du prix de son véhicule.
+"""
+
 from PyQt6 import QtCore, QtGui
 import sys
 from qt_material import apply_stylesheet
