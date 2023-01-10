@@ -6,11 +6,11 @@ par la bibliothèque sklearn
 
 """
 
-
 from serde.json import  from_json
 from scrapping import Voiture
 import numpy as np
 import pandas as pd
+from sklearn.base import TransformerMixin
 
 
 def data_frame(fichier : str = "donnees.json", modele_choisi : str = "non"):
@@ -37,9 +37,9 @@ def dataframe_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
     )
 
 def data_frame_sans_NA(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-    df = df.replace('NA', np.NaN)
-    df_EN = df.dropna()
-    return(df_EN)
+    df.replace('NA', np.NaN)
+    df = DataFrameImputer().fit_transform(df)
+    return(df)
 
 def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     df_mod = pd.get_dummies(df["modele"])
@@ -61,7 +61,6 @@ def data_frame_dummies(df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     del df['transmission']
     del df['garantie']
     del df['utilisation_prec']
-    del df['NA']
     return(df)
     
 
@@ -71,4 +70,27 @@ def data_frame_sklearn(df : pd.core.frame.DataFrame) -> dict:
         {'X': df.loc[:, df.columns != 'prix'].to_numpy(), 'y' : df['prix'].to_numpy(), 'df_entier': df.to_numpy()}
     )
     
-    
+
+class DataFrameImputer(TransformerMixin):
+
+    def __init__(self):
+        """Impute missing values.
+
+        Columns of dtype object are imputed with the most frequent value 
+        in column.
+
+        Columns of other types are imputed with mean of column.
+
+        """
+    def fit(self, df, y=None):
+
+        self.fill = pd.Series([df[c].value_counts().index[0]
+            if df[c].dtype == np.dtype('O') else df[c].mean() for c in df],
+            index=df.columns)
+
+        return self
+
+    def transform(self, df, y=None):
+        return df.fillna(self.fill)
+
+#df = DataFrameImputer().fit_transform(df)
