@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (
 )
 import os
 from PyQt6.QtCore import QRect, QProcess
+from entrainement_et_selection import prix_predit_voiture
 
 
 class Ui_MainWindow(object):
@@ -144,7 +145,7 @@ class Ui_MainWindow(object):
 
         self.comboBox_utilprec = QComboBox(self.layoutWidget_2)
         self.comboBox_utilprec.setObjectName("comboBox_utilprec")
-        self.comboBox_utilprec.addItems(("Particulier", "Entreprise"))
+        self.comboBox_utilprec.addItems(("Ex-Particulier", "Ex-Loueur"))
         self.gridLayout.addWidget(self.comboBox_utilprec, 7, 1, 1, 1)
 
         self.label_utilprec = QLabel(self.layoutWidget_2)
@@ -176,6 +177,30 @@ class Ui_MainWindow(object):
         self.label_portes.setObjectName("label_portes")
         self.label_portes.setText("Nombre de portes")
         self.gridLayout.addWidget(self.label_portes, 8, 1, 1, 1)
+
+        self.comboBox_marque = QComboBox(self.layoutWidget)
+        self.comboBox_marque.setEnabled(True)
+        self.comboBox_marque.setObjectName("comboBox_modele")
+        self.comboBox_marque.addItems(("Peugeot", "Citroen"))
+        self.gridLayout.addWidget(self.comboBox_marque, 11, 0, 1, 1)
+
+        self.label_marque = QLabel(self.layoutWidget)
+        self.label_marque.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_marque.setObjectName("label_modele")
+        self.label_marque.setText("Marque")
+        self.gridLayout.addWidget(self.label_marque, 10,0,1,1)
+
+        self.label_critair = QLabel(self.layoutWidget)
+        self.label_critair.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_critair.setObjectName("label_modele")
+        self.label_critair.setText("Crit'air")
+        self.gridLayout.addWidget(self.label_critair, 10,1,1,1)
+
+        self.comboBox_critair = QComboBox(self.layoutWidget)
+        self.comboBox_critair.setEnabled(True)
+        self.comboBox_critair.setObjectName("comboBox_modele")
+        self.comboBox_critair.addItems(("1", "2", "3", "4", "5"))
+        self.gridLayout.addWidget(self.comboBox_critair, 11,1,1,1)
         
 
 #################################################################################################
@@ -293,15 +318,22 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
 
+        self.label_gar = QLabel(self.layoutWidget_3)
+        self.label_gar.setText("Garantie")
+        self.label_gar.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout.addWidget(self.label_gar)
+
+        self.comboBox_gar = QComboBox(self.layoutWidget_3)
+        self.comboBox_gar.setObjectName("comboBox_gar")
+        self.comboBox_gar.addItems(('AUTOEXPERT',
+       'SPOTICAR ADVANCED', 'SPOTICAR ESSENTIAL', 'SPOTICAR PREMIUM'))
+        self.verticalLayout.addWidget(self.comboBox_gar)
+
         self.checkBox_kilgar = QCheckBox(self.layoutWidget_3)
         self.checkBox_kilgar.setObjectName("checkBox_kilgar")
         self.checkBox_kilgar.setText("Garantie kilométrique")
         self.verticalLayout.addWidget(self.checkBox_kilgar)
 
-        self.checkBox_gar = QCheckBox(self.layoutWidget_3)
-        self.checkBox_gar.setObjectName("checkBox_gar")
-        self.checkBox_gar.setText("Garantie")
-        self.verticalLayout.addWidget(self.checkBox_gar)
 
         self.pushButton_valider = QPushButton(self.centralwidget)
         self.pushButton_valider.setGeometry(QRect(130, 420, 301, 31))
@@ -318,6 +350,7 @@ class Ui_MainWindow(object):
         self.p = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
         path = os.path.dirname(os.path.realpath(__file__))
 
+        marque = str(self.comboBox_marque.currentText())
         modele = int(self.comboBox_modele.currentText())
         silhouette = str(self.comboBox_silhouette.currentText())
         carburant = str(self.comboBox_carburant.currentText())
@@ -333,17 +366,20 @@ class Ui_MainWindow(object):
         kilometrage = int(self.spinBox_kil.value())
         puissance = int(self.spinBox_cv.value())
         puissance_fiscal = int(self.spinBox_pf.value())
-        if self.checkBox_gar.isChecked() == True:
-            garantie = "oui"
-        else:
-            garantie = "non"
-        
+        critair = int(self.comboBox_critair.currentText())
+        garantie = str(self.comboBox_gar.currentText())
+
         if self.checkBox_kilgar.isChecked() == True:
-            gar_kil = "oui"
+            gar_kil = "garanti"
         else:
-            gar_kil = "non"
-        print(modele, silhouette, carburant, couleur,transmission, bdv, annee, util_prec, nb_places, nb_portes, prix, ptac, kilometrage, garantie, gar_kil)
-        self.p.execute('py', [f'{path}/dummy_script.py'])
+            gar_kil = "non garanti"
+        print(marque, modele, carburant, prix, kilometrage, gar_kil, bdv, transmission, couleur,
+        garantie, annee, puissance, silhouette, nb_places, util_prec, puissance_fiscal, critair, ptac, nb_portes)
+        prix_pred, prix_reel = prix_predit_voiture(marque, modele, carburant, prix, kilometrage, gar_kil, bdv, transmission, couleur,
+        garantie, annee, puissance, silhouette, nb_places, util_prec, puissance_fiscal, critair, ptac, nb_portes)
+        print(f'Le prix prédit est {prix_pred}, alors que le prix réel est de {prix_reel}, soit une différence de {abs(prix_reel - prix_pred)}')
+        
+        self.p.execute('py', [f'{path}/'])
         self.p.exitCode()
 
 

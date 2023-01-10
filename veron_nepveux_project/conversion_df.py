@@ -13,23 +13,26 @@ import pandas as pd
 from sklearn.base import TransformerMixin
 
 
-def data_frame_modele(fichier : str = "donnees.json", modele_choisi : str = "non"):
+def data_frame_modele(fichier : str = "donnees_peugeot.json", modele_choisi : str = "non"):
     df_panda = data_frame_pandas(fichier)
     df_impute = data_frame_imputation(df_panda)
     data_fin = data_frame_dummies(df_impute)
     return data_frame_sklearn(data_fin)
 
-def _ouverture_fichier(donnees ="donnees.json") :
+
+def _ouverture_fichier(donnees ="donnees_peugeot.json") :
     with open(donnees, "r") as fichier:
         contenu_fichier = fichier.read()
     return contenu_fichier
+
 
 def _reconstitution_fichier(contenu: str)-> list[Voiture]:
     return(
         from_json(list[Voiture], contenu)
     )
 
-def data_frame_pandas(fichier = "donnees.json") -> pd.core.frame.DataFrame:
+
+def data_frame_pandas(fichier = "donnees_peugeot.json") -> pd.core.frame.DataFrame:
     contenu = _ouverture_fichier(fichier)
     df = _reconstitution_fichier(contenu)
     df = pd.DataFrame(df)

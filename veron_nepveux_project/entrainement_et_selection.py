@@ -15,11 +15,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
 from dataclasses import dataclass
-from conversion_df import data_frame_modele
+from conversion_df import data_frame_modele, data_frame_pandas, data_frame_dummies, data_frame_sklearn
 from serde import serde
 from pickle import load, dump
 from scrapping import Voiture
-
+import pandas as pd
+from time import sleep
+from serde.json import to_json, from_json
 STOCKAGE = "./stockage/"
 
 
@@ -153,5 +155,29 @@ def charge_meilleur_estimateur():
         est = load(file=file)
     return est 
 
-def prix_predit_voiture(caracteristiques:Voiture):
-    ...
+def prix_predit_voiture(marque, modele, carburant, prix, kilometrage, garantie_kilometrage, boite_de_vitesse, transmission, couleur,
+        garantie, date_mise_circulation, puissance, silhouette, nb_places, utilisation_prec,
+        puissance_fiscale, critair, ptac, nb_portes):
+    list_car = []
+    car = Voiture(marque, modele, carburant, prix, kilometrage, garantie_kilometrage, boite_de_vitesse, transmission, couleur,
+        garantie, date_mise_circulation, puissance, silhouette, nb_places, utilisation_prec,
+        puissance_fiscale, critair, ptac, nb_portes)
+
+    list_car.append(car)
+    est = charge_meilleur_estimateur()
+
+    f = open('donnees_temp.json', "w")
+    f.write(to_json(list_car))
+    sleep(4)
+    car_df = data_frame_pandas('donnees_temp.json')
+    df = data_frame_pandas(f'donnees_{marque}.json')
+    df_fin = pd.concat([df, car_df], ignore_index = True)
+    df_fin_cat = data_frame_dummies(df_fin)
+    X_pred, y_pred = data_frame_sklearn(df_fin_cat)
+    est_prix = pd.DataFrame(est.predict(X_pred)).iloc[-1][0].round()
+
+    return est_prix, y_pred[-1]
+
+
+
+prix_predit_voiture("Peugeot", "2008", "Essence", 30000, 60000, "garantie", "Automatique", 2, "Noir", "SPOTICAR PREMIUM", 2020, 130, "SUV-4x4", 5, "Ex-Particulier", 6, 2, 1500, 3)
