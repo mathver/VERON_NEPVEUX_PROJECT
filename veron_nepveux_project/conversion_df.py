@@ -86,7 +86,7 @@ class DataFrameImputer(TransformerMixin):
     def fit(self, df, y=None):
 
         self.fill = pd.Series([df[c].value_counts().index[0]
-            if df[c].dtype == np.dtype('O') else df[c].mean() for c in df],
+            if df[c].dtype == np.dtype('O') else df[c].mean().round(0) for c in df],
             index=df.columns)
 
         return self
