@@ -15,7 +15,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
 from dataclasses import dataclass
-from .conversion_df import data_frame_modele
+from conversion_df import data_frame_modele
 from serde import serde
 
 
@@ -29,7 +29,7 @@ class Dataframes:
     y_tr: np.ndarray
     y_te : np.ndarray
 
-def remplit_class(fichier : str = "donnees.json"):
+def remplit_class(fichier : str = "donnees.json") -> Dataframes:
     X,y = data_frame_modele(fichier)
     X_tr, X_te, y_tr, y_te = train_test_split(X, y)
     return Dataframes(
@@ -113,4 +113,21 @@ def multi_layer_regressor(X_tr : np.ndarray, y_tr : np.ndarray):
     return pln_gs.best_estimator_,pln_gs.best_score_, pln_gs.cv_results_
  
 def selection_modele(fichier: str = "donnees.json"):
-    ...
+    dfs = remplit_class(fichier)
+    pln_gs_be,pln_gs_bs,pln_gs_cv = multi_layer_regressor(dfs.X_tr,dfs.y_tr)
+    svr_gs_be,svr_gs_bs,svr_gs_cv = svr_(dfs.X_tr,dfs.y_tr)
+    rfr_gs_be,rfr_gs_bs,rfr_gs_cv = rd_foret(dfs.X_tr,dfs.y_tr)
+    knr_gs_be,knr_gs_bs,knr_gs_cv = knn(dfs.X_tr,dfs.y_tr)
+    en_gs_be,en_gs_bs,en_gs_cv = elastic_net(dfs.X_tr,dfs.y_tr)
+    dict_modeles = {f'{pln_gs_be}' : pln_gs_bs,
+                    f'{svr_gs_be}' : svr_gs_bs,
+                    f'{rfr_gs_be}' : rfr_gs_bs,
+                    f'{knr_gs_be}' : knr_gs_bs,
+                    f'{en_gs_be}' : en_gs_bs
+                    }
+    meilleur_estimateur = eval(
+        max(
+            dict_modeles
+        )
+    )
+    return meilleur_estimateur,dict_modeles[max(dict_modeles)]
