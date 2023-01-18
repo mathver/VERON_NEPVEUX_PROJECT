@@ -11,17 +11,23 @@ app = typer.Typer()
 @app.callback()
 def callback():
     """
-    Programme pour exécuter le scrapping et l'estimation.
+    Programme pour exécuter le scraping et lancer l'UI pour l'estimation du prix du véhicule.
     """
 
 
 @app.command()
-def scrapping():
+def scraping():
+    """
+    Commande permettant l'exécution du programme de scraping sur les quatre marques pour recréer une base de données.
+    """
     scrap_marque("https://www.spoticar.fr", ('Peugeot', 'Citroen', 'Fiat', 'Opel'))
 
 
 @app.command()
 def estimation():
+    """
+    Commande permettant d'ouvrir l'UI pour l'estimation du prix du véhicule de l'utilisateur.
+    """
     import interface_estimation
 
 

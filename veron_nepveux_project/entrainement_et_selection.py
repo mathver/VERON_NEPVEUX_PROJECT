@@ -1,5 +1,5 @@
 """
-Description : 
+# Description 
 
 Librairie ayant pour but d'entrainer et de sélectionner le modèle le plus adéquat pour les données.
 """
@@ -32,6 +32,13 @@ STOCKAGE = "./stockage/"
 @serde
 @dataclass
 class Dataframes:
+    """
+    # Description
+
+    Dataclass permettant le création d'un dataframe compatible avec le module `sklearn` contenant les données originelles
+    et les splits d'entraînements et de tests des modèles.
+    """
+
     X: np.ndarray
     X_tr: np.ndarray
     X_te: np.ndarray
@@ -43,6 +50,20 @@ class Dataframes:
 def remplit_class(
     fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
 ) -> Dataframes:
+    """
+    # Description
+
+    Fonction permettant la création d'un objet de classe `Dataframes` à partir des fichiers de données json.
+
+    ## Paramètres
+
+    - fichier_peugeot (str): Fichier json contenant les données de la marque Peugeot.
+    - fichier_citroen (str): Fichier json contenant les données de la marque Citroën.
+
+    ## Sortie
+
+    Un objet de classe Dataframes.
+    """
     X, y = data_frame_modele(fichier_peugeot, fichier_citroen)
     X_tr, X_te, y_tr, y_te = train_test_split(X, y)
     return Dataframes(
@@ -56,7 +77,20 @@ def remplit_class(
 
 
 def elastic_net(X_tr: np.ndarray, y_tr: np.ndarray):
+    """
+    # Description
 
+    Fonction permettant le calcul du modèle ElasticNet sur les données précedemment choisies.
+
+    ## Paramètres
+
+    - X_tr (np.ndarray): Split d'entraînement des données concernant les variables.
+    - y_tr (np.ndarray): Split d'entraînement des données concernant le prix.
+
+    ## Sortie
+
+    Retourne le meilleur estimateur, le meilleur score et les meilleurs paramètres du modèle.
+    """
     en = ElasticNet()
     en_gs = GridSearchCV(
         en,
@@ -70,7 +104,20 @@ def elastic_net(X_tr: np.ndarray, y_tr: np.ndarray):
 
 
 def knn(X_tr: np.ndarray, y_tr: np.ndarray):
+    """
+    # Description
 
+    Fonction permettant le calcul du modèle KNN sur les données précedemment choisies.
+
+    ## Paramètres
+
+    - X_tr (np.ndarray): Split d'entraînement des données concernant les variables.
+    - y_tr (np.ndarray): Split d'entraînement des données concernant le prix.
+
+    ## Sortie
+
+    Retourne le meilleur estimateur, le meilleur score et les meilleurs paramètres du modèle.
+    """
     knr = KNeighborsRegressor()
     knr_gs = GridSearchCV(
         knr,
@@ -84,7 +131,20 @@ def knn(X_tr: np.ndarray, y_tr: np.ndarray):
 
 
 def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray):
+    """
+    # Description
 
+    Fonction permettant le calcul du modèle Random Forest sur les données précedemment choisies.
+
+    ## Paramètres
+
+    - X_tr (np.ndarray): Split d'entraînement des données concernant les variables.
+    - y_tr (np.ndarray): Split d'entraînement des données concernant le prix.
+
+    ## Sortie
+
+    Retourne le meilleur estimateur, le meilleur score et les meilleurs paramètres du modèle.
+    """
     rfr = RandomForestRegressor()
     rfr_gs = GridSearchCV(
         rfr,
@@ -97,7 +157,20 @@ def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray):
 
 
 def svr_(X_tr: np.ndarray, y_tr: np.ndarray):
+    """
+    # Description
 
+    Fonction permettant le calcul du modèle SVR sur les données précedemment choisies.
+
+    ## Paramètres
+
+    - X_tr (np.ndarray): Split d'entraînement des données concernant les variables.
+    - y_tr (np.ndarray): Split d'entraînement des données concernant le prix.
+
+    ## Sortie
+
+    Retourne le meilleur estimateur, le meilleur score et les meilleurs paramètres du modèle.
+    """
     svr = SVR()
     svr_gs = GridSearchCV(
         svr,
@@ -112,7 +185,20 @@ def svr_(X_tr: np.ndarray, y_tr: np.ndarray):
 
 
 def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
+    """
+    # Description
 
+    Fonction permettant le calcul du modèle de régression multi-couches (réseau neuronal artificiel) sur les données précedemment choisies.
+
+    ## Paramètres
+
+    - X_tr (np.ndarray): Split d'entraînement des données concernant les variables.
+    - y_tr (np.ndarray): Split d'entraînement des données concernant le prix.
+
+    ## Sortie
+
+    Retourne le meilleur estimateur, le meilleur score et les meilleurs paramètres du modèle.
+    """
     pln = Pipeline(
         [
             ("mise_echelle", MinMaxScaler()),
@@ -134,6 +220,20 @@ def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
 def selection_modele(
     fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
 ):
+    """
+    # Description
+
+    Fonction permettant de choisir parmi les modèles estimés le plus adaptés aux données.
+
+    ## Paramètres
+
+    - fichier_peugeot (str): Fichier json contenant les données de la marque Peugeot.
+    - fichier_citroen (str): Fichier json contenant les données de la marque Citroën.
+
+    ## Sortie
+
+    Retourne le meilleur modèle parmi ceux estimés.
+    """
     dfs = remplit_class(fichier_peugeot, fichier_citroen)
     pln_gs_be, pln_gs_bs, pln_gs_cv = multi_layer_regressor(dfs.X_tr, dfs.y_tr)
     svr_gs_be, svr_gs_bs, svr_gs_cv = svr_(dfs.X_tr, dfs.y_tr)
@@ -147,18 +247,39 @@ def selection_modele(
         "knr_gs_be": knr_gs_bs,
         "en_gs_be": en_gs_bs,
     }
-    meilleur_estimateur = eval(max(dict_modeles, key=dict_modeles.get))#horreur
+    meilleur_estimateur = eval(max(dict_modeles, key=dict_modeles.get))  # horreur
     return save_meilleur_estimateur(meilleur_estimateur)
 
 
 def save_meilleur_estimateur(meilleur_estimateur: Pipeline):
+    """
+    # Description
+
+    Fonction permettant de sauvegarder le meilleur modèle au format pkl (pickle).
+
+    ## Paramètre
+
+    - meilleur_estimateur (Pipeline): le meilleur modèle trouvé.
+
+    ## Sortie
+
+    Retourne un fichier pkl contenant le modèle.
+    """
     path = ".\meilleur_estimateur.pkl"
     with open(path, "wb") as file:
         dump(obj=meilleur_estimateur, file=file)
 
 
 def charge_meilleur_estimateur():
-    """Load best estimator from backup directory."""
+    """
+    # Description
+
+    Fonction permettant de charger le meilleur modèle au format pkl (pickle).
+
+    ## Sortie
+
+    Retourne le modèle extrait du fichier pkl.
+    """
     path = ".\meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
@@ -185,8 +306,38 @@ def prix_predit_voiture(
     critair,
     ptac,
     nb_portes,
-):
+) -> int:
+    """
+    # Description
 
+    Fonction permettant de prédire le prix d'un véhicule à partir de ces caractéristiques.
+
+    ## Paramètres
+
+    - marque (str): marque du véhicule (Peugeot, Citroën, Opel ou Fiat).
+    - modele (str): Modèle du véhicule, dépendant de la marque.
+    - carburant (str): Type de carburant du véhicule.
+    - prix (int): Prix du véhicule.
+    - kilometrage (int): Kilométrage du véhicule.
+    - garantie_kilometrage (str): Est-ce que le kilométrage est garanti ou non ?
+    - boite_de_vitesse (str): Type de boîte de vitesse (manuelle ou automatique).
+    - transmission (int): Type de transmission (2 ou 4 roues motrices).
+    - couleur (str): Couleur du véhicule.
+    - garantie (str): Type de garantie proposé par le site vendeur.
+    - date_mise_circulation (int): Année de la mise en circulation du véhicule.
+    - puissance (int): Puissance du véhicule en chevaux.
+    - silhouette (str): Silhouette du véhicule (SUV, citadine, berline, ...).
+    - nb_places (int): Nombre de places du véhicules.
+    - utilisation_prec (str): Utilisation précédente du véhicule.
+    - puissance_fiscale (int): Puissance fiscale du véhicule en chevaux fiscaux.
+    - critair (int): Indice Crit'Air du véhicule.
+    - ptac (int): PTAC du véhicule.
+    - nb_portes (int): Nombre de portes du véhicules (coffre inclus).
+
+    ## Sortie
+
+    Retourne le prix prédit par le modèle et le prix d'origine.
+    """
     car = Voiture(
         marque,
         modele,
@@ -208,11 +359,9 @@ def prix_predit_voiture(
         ptac,
         nb_portes,
     )
-
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-
     f = open("donnees_test.json", "w")
     f.write(to_json(list_car))
     f.close()

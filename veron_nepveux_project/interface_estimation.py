@@ -25,6 +25,8 @@ from rich import print
 
 class Ui_MainWindow(object):
     """
+    # Description
+
     Classe complexe et complète permettant à l'aide PyQt6 de développer une interface utilisateur l'autorisant à rentrer les informatiosn de son véhicule pour procéder
     à une estimation par la base de données scrappé et au modèle choisi.
     """
@@ -410,6 +412,12 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
     def updateModeleCombo(self, index):
+        """
+        # Description
+
+        Fonction interne permettant l'actualisation des modèles disponibles à la sélection selon la marque sélectionnée par
+        l'utilisateur.
+        """
         self.comboBox_modele.clear()
         modeles = self.comboBox_marque.itemData(index)
         if modeles:
@@ -417,7 +425,10 @@ class Ui_MainWindow(object):
 
     def start_process(self):
         """
-        Méthode permettant de lier l'exécution de l'estimation à tous les paramètres choisis par l'utilisateur à l'actionnement de bouton "Valider".
+        # Description
+
+        Fonction interne permettant de relier le processus d'estimation du module `entrainement_et_selection` aux paramètres
+        rentrés par l'utilisateur dans l'UI, et de lancer l'estimation.
         """
         self.p = (
             QProcess()

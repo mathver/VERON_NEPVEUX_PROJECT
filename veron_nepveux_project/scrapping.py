@@ -17,6 +17,34 @@ from time import sleep
 @serde
 @dataclass
 class Voiture:
+    """
+    # Description
+
+    Dataclasse permettant de créer un objet `Voiture` prenant un certain nombre de paramètres.
+
+    ## Paramètres
+
+    - marque (str): marque du véhicule (Peugeot, Citroën, Opel ou Fiat).
+    - modele (str): Modèle du véhicule, dépendant de la marque.
+    - carburant (str): Type de carburant du véhicule.
+    - prix (int): Prix du véhicule.
+    - kilometrage (int): Kilométrage du véhicule.
+    - garantie_kilometrage (str): Est-ce que le kilométrage est garanti ou non ?
+    - boite_de_vitesse (str): Type de boîte de vitesse (manuelle ou automatique).
+    - transmission (int): Type de transmission (2 ou 4 roues motrices).
+    - couleur (str): Couleur du véhicule.
+    - garantie (str): Type de garantie proposé par le site vendeur.
+    - date_mise_circulation (int): Année de la mise en circulation du véhicule.
+    - puissance (int): Puissance du véhicule en chevaux.
+    - silhouette (str): Silhouette du véhicule (SUV, citadine, berline, ...).
+    - nb_places (int): Nombre de places du véhicules.
+    - utilisation_prec (str): Utilisation précédente du véhicule.
+    - puissance_fiscale (int): Puissance fiscale du véhicule en chevaux fiscaux.
+    - critair (int): Indice Crit'Air du véhicule.
+    - ptac (int): PTAC du véhicule.
+    - nb_portes (int): Nombre de portes du véhicules (coffre inclus).
+    """
+
     marque: str
     modele: str
     carburant: str
@@ -41,15 +69,36 @@ class Voiture:
 URL = "https://www.spoticar.fr"
 
 
-def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver):
-    """Accept cookies on Spoticar pages."""
+def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver) -> None:
+    """
+    # Description
+
+    Fonction permettant d'accepter les cookies une fois le site ouvert.
+
+    ## Paramètres
+
+    - driver (webdriver.chrome.webdriver.WebDriver): Driver utilisé avec `Selenium` pour ouvrir la page web.
+    """
     button = WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.ID, "_psaihm_id_accept_all_btn"))
     )
     button.click()
 
 
-def recolt_data(driver, marque):
+def recolt_data(
+    driver: webdriver.chrome.webdriver.WebDriver, marque: str
+) -> list[Voiture]:
+    """
+    # Description
+
+    Fonction permettant la récupération des données sur chaque fiche véhicule du site pour ensuite créer un fichier json par marque
+    de véhicule.
+
+    ## Paramètres
+
+    - driver (webdriver.chrome.webdriver.WebDriver):  driver utilisé avec `Selenium` pour ouvrir la page web.
+    - marque (str): marque des véhicules à scraper.
+    """
     car_list = list()
     for i in range(1, 600):
         if i % 12 == 0:
@@ -293,7 +342,39 @@ def formalisation(
     critair,
     ptac,
     nb_portes,
-):
+) -> str | int:
+    """
+    # Description
+
+    Fonction permettant la formalisation des données récupérées pour chaque véhicule en ne gardant que les nombres pour les valeurs
+    numériques, et des catégories pour le reste.
+
+    ## Paramètres
+
+    - marque (str): marque du véhicule (Peugeot, Citroën, Opel ou Fiat).
+    - modele (str): Modèle du véhicule, dépendant de la marque.
+    - carburant (str): Type de carburant du véhicule.
+    - prix (int): Prix du véhicule.
+    - kilometrage (int): Kilométrage du véhicule.
+    - garantie_kilometrage (str): Est-ce que le kilométrage est garanti ou non ?
+    - boite_de_vitesse (str): Type de boîte de vitesse (manuelle ou automatique).
+    - transmission (int): Type de transmission (2 ou 4 roues motrices).
+    - couleur (str): Couleur du véhicule.
+    - garantie (str): Type de garantie proposé par le site vendeur.
+    - date_mise_circulation (int): Année de la mise en circulation du véhicule.
+    - puissance (int): Puissance du véhicule en chevaux.
+    - silhouette (str): Silhouette du véhicule (SUV, citadine, berline, ...).
+    - nb_places (int): Nombre de places du véhicules.
+    - utilisation_prec (str): Utilisation précédente du véhicule.
+    - puissance_fiscale (int): Puissance fiscale du véhicule en chevaux fiscaux.
+    - critair (int): Indice Crit'Air du véhicule.
+    - ptac (int): PTAC du véhicule.
+    - nb_portes (int): Nombre de portes du véhicules (coffre inclus).
+
+    ## Sortie
+
+    Les variables typés de la bonne façon.
+    """
     if modele == "NA":
         modele = modele
     else:
@@ -406,7 +487,22 @@ def formalisation(
     )
 
 
-def scrap_marque(URL: str, marques: list[str]):
+def scrap_marque(URL: str, marques: list[str]) -> str:
+    """
+    # Description
+
+    Fonction permettant d'ouvrir la page web, d'accéder aux fiches véhicules, de récupérer les données et de les stocker. La fonction
+    se répète sur les quatres marques (Peugeot, Citroën, Opel et Fiat).
+
+    ## Paramètres
+
+    - URL (str): URL du site web
+    - marques (list[str]): liste des marques à scraper.
+
+    ## Sortie
+
+    Quatre fichiers json chacun correspond à une marque et composés d'objets de la classe `Voiture`.
+    """
     for marque in marques:
         driver = webdriver.Chrome()
         driver.maximize_window()
@@ -426,4 +522,3 @@ def scrap_marque(URL: str, marques: list[str]):
         resultat = recolt_data(driver, marque)
         f = open(f"donnees_{marque}.json", "w")
         f.write(to_json(resultat))
-
