@@ -2,12 +2,21 @@
 name = "veron-nepveux-project"
 version = "0.1.0"
 description = ""
-authors = ["Mathieu <mathieuveron@outlook.fr>"]
+authors = ["Mathieu <mathieuveron@outlook.fr>, Baptiste <baptiste.nepveux@icloud.com>"]
 readme = "README.md"
 packages = [{include = "veron_nepveux_project"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pyqt6 = "^6.4.0"
+qt-material = "^2.12"
+rich = "^13.0.1"
+scikit-learn = "^1.2.0"
+seaborn = "^0.12.2"
+matplotlib = "^3.6.2"
+numpy = "^1.24.1"
+pandas = "^1.5.2"
+typer = "^0.7.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,6 +1,6 @@
 """
 Librairie permettant la création d'une interface graphique pour l'interaction utilisateur et l'estimation du prix de son véhicule.
-""" 
+"""
 
 from PyQt6 import QtCore, QtGui
 import sys
@@ -15,7 +15,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QCheckBox,
     QApplication,
-    QMainWindow
+    QMainWindow,
 )
 import os
 from PyQt6.QtCore import QRect, QProcess
@@ -65,32 +65,13 @@ class Ui_MainWindow(object):
         self.comboBox_modele = QComboBox(self.layoutWidget_2)
         self.comboBox_modele.setEnabled(True)
         self.comboBox_modele.setObjectName("comboBox_modele")
-        self.comboBox_modele.addItems(
-            (
-                "108",
-                "208",
-                "308",
-                "308 SW",
-                "408",
-                "508",
-                "508 SW",
-                "2008",
-                "3008",
-                "4008",
-                "5008",
-                "Boxer",
-                "Expert",
-                "Partner",
-                "Rifter",
-            )
-        )
-        self.gridLayout.addWidget(self.comboBox_modele, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_modele, 1, 1, 1, 1)
 
         self.label_modele = QLabel(self.layoutWidget_2)
         self.label_modele.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_modele.setObjectName("label_modele")
         self.label_modele.setText("Modèle")
-        self.gridLayout.addWidget(self.label_modele, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_modele, 0, 1, 1, 1)
 
         self.comboBox_silhouette = QComboBox(self.layoutWidget_2)
         self.comboBox_silhouette.setObjectName("comboBox_silhouette")
@@ -105,13 +86,13 @@ class Ui_MainWindow(object):
                 "Utilitaire",
             )
         )
-        self.gridLayout.addWidget(self.comboBox_silhouette, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_silhouette, 11, 1, 1, 1)
 
         self.label_silhouette = QLabel(self.layoutWidget_2)
         self.label_silhouette.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_silhouette.setObjectName("label_silhouette")
         self.label_silhouette.setText("Silhouette")
-        self.gridLayout.addWidget(self.label_silhouette, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_silhouette, 10, 1, 1, 1)
 
         self.comboBox_carburant = QComboBox(self.layoutWidget_2)
         self.comboBox_carburant.setObjectName("comboBox_carburant")
@@ -219,26 +200,74 @@ class Ui_MainWindow(object):
         self.comboBox_marque = QComboBox(self.layoutWidget)
         self.comboBox_marque.setEnabled(True)
         self.comboBox_marque.setObjectName("comboBox_modele")
-        self.comboBox_marque.addItems(("Peugeot", "Citroen"))
-        self.gridLayout.addWidget(self.comboBox_marque, 11, 0, 1, 1)
+        self.comboBox_marque.addItem(
+            "Peugeot",
+            [
+                "108",
+                "2008",
+                "208",
+                "3008",
+                "308",
+                "308 SW",
+                "4008",
+                "5008",
+                "508",
+                "508 SW",
+                "BERLINGO",
+                "BOXER",
+                "EXPERT",
+                "PARTNER",
+                "RIFTER",
+                "TRAVELLER",
+            ],
+        )
+        self.comboBox_marque.addItem(
+            "Citroen",
+            [
+                "BERLINGO",
+                "C-ELYSEE",
+                "C-ZERO",
+                "C1",
+                "C3",
+                "C3 AIRCROSS",
+                "C3 PICASSO",
+                "C4",
+                "C4 AIRCROSS",
+                "C4 CACTUS",
+                "C4 GRAND PICASSO",
+                "C4 GRAND SPACETOURER",
+                "C4 PICASSO",
+                "C4 SPACETOURER",
+                "C5",
+                "C5 AIRCROSS",
+                "C5 X",
+                "JUMPER",
+                "JUMPY",
+                "SPACETOURER",
+            ],
+        )
+        self.gridLayout.addWidget(self.comboBox_marque, 1, 0, 1, 1)
+
+        self.comboBox_marque.currentIndexChanged.connect(self.updateModeleCombo)
+        self.updateModeleCombo(self.comboBox_marque.currentIndex())
 
         self.label_marque = QLabel(self.layoutWidget)
         self.label_marque.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_marque.setObjectName("label_modele")
         self.label_marque.setText("Marque")
-        self.gridLayout.addWidget(self.label_marque, 10, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_marque, 0, 0, 1, 1)
 
         self.label_critair = QLabel(self.layoutWidget)
         self.label_critair.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_critair.setObjectName("label_modele")
         self.label_critair.setText("Crit'air")
-        self.gridLayout.addWidget(self.label_critair, 10, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_critair, 10, 0, 1, 1)
 
         self.comboBox_critair = QComboBox(self.layoutWidget)
         self.comboBox_critair.setEnabled(True)
         self.comboBox_critair.setObjectName("comboBox_modele")
         self.comboBox_critair.addItems(("1", "2", "3", "4", "5"))
-        self.gridLayout.addWidget(self.comboBox_critair, 11, 1, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_critair, 11, 0, 1, 1)
 
         #################################################################################################
 
@@ -358,10 +387,10 @@ class Ui_MainWindow(object):
         self.comboBox_gar.setObjectName("comboBox_gar")
         self.comboBox_gar.addItems(
             (
-                "AUTOEXPERT",
-                "SPOTICAR ADVANCED",
-                "SPOTICAR ESSENTIAL",
                 "SPOTICAR PREMIUM",
+                "SPOTICAR ESSENTIAL",
+                "SPOTICAR ADVANCED",
+                "AUTOEXPERT",
             )
         )
         self.verticalLayout.addWidget(self.comboBox_gar)
@@ -369,6 +398,7 @@ class Ui_MainWindow(object):
         self.checkBox_kilgar = QCheckBox(self.layoutWidget_3)
         self.checkBox_kilgar.setObjectName("checkBox_kilgar")
         self.checkBox_kilgar.setText("Garantie kilométrique")
+        self.checkBox_kilgar.setChecked(True)
         self.verticalLayout.addWidget(self.checkBox_kilgar)
 
         self.pushButton_valider = QPushButton(self.centralwidget)
@@ -378,6 +408,12 @@ class Ui_MainWindow(object):
         self.pushButton_valider.clicked.connect(self.start_process)
 
         MainWindow.setCentralWidget(self.centralwidget)
+
+    def updateModeleCombo(self, index):
+        self.comboBox_modele.clear()
+        modeles = self.comboBox_marque.itemData(index)
+        if modeles:
+            self.comboBox_modele.addItems(modeles)
 
     def start_process(self):
         """

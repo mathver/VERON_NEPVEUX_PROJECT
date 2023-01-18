@@ -17,12 +17,13 @@ def callback():
 
 @app.command()
 def scrapping():
-    scrap_marque('https://spoticar.fr', 'Peugeot')
+    scrap_marque("https://www.spoticar.fr", ('Peugeot', 'Citroen', 'Fiat', 'Opel'))
 
 
 @app.command()
 def estimation():
     import interface_estimation
+
 
 if __name__ == "__main__":
     app()

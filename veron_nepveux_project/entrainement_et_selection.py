@@ -18,6 +18,7 @@ from conversion_df import (
     data_frame_pandas,
     data_frame_dummies,
     data_frame_sklearn,
+    assemblage_donnees,
 )
 from serde import serde
 from pickle import load, dump
@@ -39,8 +40,10 @@ class Dataframes:
     y_te: np.ndarray
 
 
-def remplit_class(fichier: str = "donnees.json") -> Dataframes:
-    X, y = data_frame_modele(fichier)
+def remplit_class(
+    fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
+) -> Dataframes:
+    X, y = data_frame_modele(fichier_peugeot, fichier_citroen)
     X_tr, X_te, y_tr, y_te = train_test_split(X, y)
     return Dataframes(
         X=X,
@@ -128,8 +131,10 @@ def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
     return pln_gs.best_estimator_, pln_gs.best_score_, pln_gs.cv_results_
 
 
-def selection_modele(fichier: str = "donnees_peugeot.json"):
-    dfs = remplit_class(fichier)
+def selection_modele(
+    fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
+):
+    dfs = remplit_class(fichier_peugeot, fichier_citroen)
     pln_gs_be, pln_gs_bs, pln_gs_cv = multi_layer_regressor(dfs.X_tr, dfs.y_tr)
     svr_gs_be, svr_gs_bs, svr_gs_cv = svr_(dfs.X_tr, dfs.y_tr)
     rfr_gs_be, rfr_gs_bs, rfr_gs_cv = rd_foret(dfs.X_tr, dfs.y_tr)
@@ -142,19 +147,19 @@ def selection_modele(fichier: str = "donnees_peugeot.json"):
         "knr_gs_be": knr_gs_bs,
         "en_gs_be": en_gs_bs,
     }
-    meilleur_estimateur = eval(max(dict_modeles, key=dict_modeles.get))
+    meilleur_estimateur = eval(max(dict_modeles, key=dict_modeles.get))#horreur
     return save_meilleur_estimateur(meilleur_estimateur)
 
 
 def save_meilleur_estimateur(meilleur_estimateur: Pipeline):
-    path = "meilleur_estimateur.pkl"
+    path = ".\meilleur_estimateur.pkl"
     with open(path, "wb") as file:
         dump(obj=meilleur_estimateur, file=file)
 
 
 def charge_meilleur_estimateur():
     """Load best estimator from backup directory."""
-    path = "meilleur_estimateur.pkl"
+    path = ".\meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
     return est
@@ -212,7 +217,7 @@ def prix_predit_voiture(
     f.write(to_json(list_car))
     f.close()
     car_df = data_frame_pandas("donnees_test.json")
-    df = data_frame_pandas(f"donnees_{marque}.json")
+    df = assemblage_donnees()
     df_fin = pd.concat([df, car_df], ignore_index=True)
     df_fin_cat = data_frame_dummies(df_fin)
     X_pred, y_pred = data_frame_sklearn(df_fin_cat)

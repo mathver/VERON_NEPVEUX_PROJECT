@@ -51,7 +51,7 @@ def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver):
 
 def recolt_data(driver, marque):
     car_list = list()
-    for i in range(1, 6):
+    for i in range(1, 600):
         if i % 12 == 0:
             driver.find_element(
                 By.CSS_SELECTOR, "#see-more-results > .tags-and-alerts-button-text"
@@ -406,22 +406,24 @@ def formalisation(
     )
 
 
-def scrap_marque(URL: str, marque: str):
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get(URL)
-    sleep(2)
-    accept_cookies(driver)
-    sleep(3)
-    driver.find_element(By.ID, "search-input-filter-home").click()
-    sleep(2)
-    driver.find_element(By.ID, "search-input-filter-home").send_keys(
-        f"{marque}" + Keys.ENTER
-    )
-    sleep(5)
-    driver.find_element(By.ID, "count").click()
-    sleep(5)
-    driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-    resultat = recolt_data(driver, marque)
-    f = open(f"donnees_{marque}.json", "w")
-    f.write(to_json(resultat))
+def scrap_marque(URL: str, marques: list[str]):
+    for marque in marques:
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get(URL)
+        sleep(2)
+        accept_cookies(driver)
+        sleep(3)
+        driver.find_element(By.ID, "search-input-filter-home").click()
+        sleep(2)
+        driver.find_element(By.ID, "search-input-filter-home").send_keys(
+            f"{marque}" + Keys.ENTER
+        )
+        sleep(5)
+        driver.find_element(By.ID, "count").click()
+        sleep(5)
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+        resultat = recolt_data(driver, marque)
+        f = open(f"donnees_{marque}.json", "w")
+        f.write(to_json(resultat))
+
