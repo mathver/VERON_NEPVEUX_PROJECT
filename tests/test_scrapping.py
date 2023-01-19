@@ -1,5 +1,6 @@
 from os.path import exists
 from veron_nepveux_project.scrapping import Voiture, formalisation, scrap_marque
+import pytest
 
 
 def test_Voiture():
@@ -102,3 +103,9 @@ def test_scrap_marque():
 
 # Ce test est aussi fonctionnel pour les cookies et recolt_data
 # Il permet aussi de comprendre lors de son exécution du choix des marques (manque de données)
+def test_recolt_data():
+    pass
+
+
+def test_accept_cookies():
+    pass
