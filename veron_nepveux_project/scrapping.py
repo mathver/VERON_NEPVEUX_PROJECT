@@ -8,6 +8,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from serde import serde
 from serde.json import to_json
 from dataclasses import dataclass
@@ -512,7 +514,9 @@ def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
     Quatre fichiers json chacun correspond à une marque et composés d'objets de la classe `Voiture`.
     """
     for marque in marques:
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install())
+        )
         driver.maximize_window()
         driver.get(URL)
         sleep(2)

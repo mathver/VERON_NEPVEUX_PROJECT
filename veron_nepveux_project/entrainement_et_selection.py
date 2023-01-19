@@ -11,7 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
 from dataclasses import dataclass
-from conversion_df import (
+from veron_nepveux_project.conversion_df import (
     data_frame_modele,
     data_frame_pandas,
     data_frame_dummies,
@@ -20,7 +20,7 @@ from conversion_df import (
 )
 from serde import serde
 from pickle import load, dump
-from scrapping import Voiture
+from veron_nepveux_project.scrapping import Voiture
 import pandas as pd
 from serde.json import to_json
 
@@ -46,10 +46,10 @@ class Dataframes:
 
 
 def remplit_class(
-    fichier_peugeot="donnees_peugeot.json",
-    fichier_citroen="donnees_citroen.json",
-    fichier_fiat="donnees_fiat.json",
-    fichier_opel="donnees_opel.json",
+    fichier_peugeot="./veron_nepveux_project/donnees_peugeot.json",
+    fichier_citroen="./veron_nepveux_project/donnees_citroen.json",
+    fichier_fiat="./veron_nepveux_project/donnees_fiat.json",
+    fichier_opel="./veron_nepveux_project/donnees_opel.json",
 ) -> Dataframes:
     """
     # Description
