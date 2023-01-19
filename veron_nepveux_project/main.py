@@ -4,6 +4,7 @@ Librairie qui permet la création d'une interface en ligne de commande pour l'en
 
 import typer
 from scrapping import scrap_marque
+from typing import List
 
 app = typer.Typer()
 
@@ -18,9 +19,12 @@ def callback():
 @app.command()
 def scraping():
     """
-    Commande permettant l'exécution du programme de scraping sur les quatre marques pour recréer une base de données.
+    Commande permettant l'exécution du programme de scraping
+    sur les quatre marques pour recréer une base de données.
+
+    Les marques disponibles sont : Peugeot, Citroën, Opel et Fiat.
     """
-    scrap_marque("https://www.spoticar.fr", ("Fiat", "Opel"))
+    scrap_marque("https://www.spoticar.fr", ("Peugeot", "Citroën", "Opel", "Fiat"))
 
 
 @app.command()
