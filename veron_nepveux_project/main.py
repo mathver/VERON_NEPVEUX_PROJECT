@@ -20,7 +20,7 @@ def scraping():
     """
     Commande permettant l'exécution du programme de scraping sur les quatre marques pour recréer une base de données.
     """
-    scrap_marque("https://www.spoticar.fr", ('Peugeot', 'Citroen', 'Fiat', 'Opel'))
+    scrap_marque("https://www.spoticar.fr", ("Fiat", "Opel"))
 
 
 @app.command()
