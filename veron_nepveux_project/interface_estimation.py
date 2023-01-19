@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (
     QCheckBox,
     QApplication,
     QMainWindow,
+    QDialog,
 )
 import os
 from PyQt6.QtCore import QRect, QProcess
