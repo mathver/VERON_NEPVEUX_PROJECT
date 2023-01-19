@@ -7,15 +7,15 @@ par la bibliothèque sklearn à partir des données scrapper précedemment.
 """
 
 from serde.json import from_json
-from scrapping import Voiture
+from .scrapping import Voiture
 import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin
 
 
 def data_frame_modele(
-    fichier_peugeot: str = "donnees_peugeot.json",
-    fichier_citroen: str = "donnees_citroen.json",
+    fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
+    fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
 ) -> dict:
     """
     # Description
@@ -66,7 +66,7 @@ def assemblage_donnees(
     return df
 
 
-def _ouverture_fichier(donnees: str = "donnees_peugeot.json") -> str:
+def _ouverture_fichier(donnees: str) -> str:
     """
     # Description
 
@@ -102,7 +102,7 @@ def _reconstitution_fichier(contenu: str) -> list[Voiture]:
     return from_json(list[Voiture], contenu)
 
 
-def data_frame_pandas(fichier="donnees_peugeot.json") -> pd.core.frame.DataFrame:
+def data_frame_pandas(fichier) -> pd.core.frame.DataFrame:
     """
     # Description
 
