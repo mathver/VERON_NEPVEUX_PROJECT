@@ -86,7 +86,7 @@ def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver) -> None:
 
 
 def recolt_data(
-    driver: webdriver.chrome.webdriver.WebDriver, marque: str
+    driver: webdriver.chrome.webdriver.WebDriver, marque: str, max: int
 ) -> list[Voiture]:
     """
     # Description
@@ -100,7 +100,7 @@ def recolt_data(
     - marque (str): marque des véhicules à scraper.
     """
     car_list = list()
-    for i in range(1, 600):
+    for i in range(1, max):
         if i % 12 == 0:
             driver.find_element(
                 By.CSS_SELECTOR, "#see-more-results > .tags-and-alerts-button-text"
@@ -380,10 +380,13 @@ def formalisation(
     """
     if modele == "NA":
         modele = modele
-    elif marque == "peugeot" or "citroen":
+    elif marque == "peugeot":
         modele = modele[8:]
-    elif marque == "fiat" or "opel":
+    elif marque == "citroen":
+        modele = modele[8:]
+    else:
         modele = modele[5:]
+
     carburant = carburant
 
     if kilometrage == "NA":
@@ -470,6 +473,7 @@ def formalisation(
         utilisation_prec = utilisation_prec
 
     return (
+        marque,
         modele,
         carburant,
         prix,
@@ -491,7 +495,7 @@ def formalisation(
     )
 
 
-def scrap_marque(URL: str, marques: list[str]) -> str:
+def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
     """
     # Description
 
@@ -523,6 +527,6 @@ def scrap_marque(URL: str, marques: list[str]) -> str:
         driver.find_element(By.ID, "count").click()
         sleep(5)
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-        resultat = recolt_data(driver, marque)
+        resultat = recolt_data(driver, marque, max)
         f = open(f"donnees_{marque}.json", "w")
         f.write(to_json(resultat))

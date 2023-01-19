@@ -4,7 +4,7 @@ Librairie qui permet la création d'une interface en ligne de commande pour l'en
 
 import typer
 from scrapping import scrap_marque
-from typing import List
+
 
 app = typer.Typer()
 

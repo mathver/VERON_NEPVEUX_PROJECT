@@ -3,11 +3,10 @@ Description :
 
 Librairie python permettant la création et la modification d'un dataframe utilisable 
 par la bibliothèque sklearn à partir des données scrapper précedemment.
-
 """
 
 from serde.json import from_json
-from scrapping import Voiture
+from veron_nepveux_project.scrapping import Voiture
 import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin

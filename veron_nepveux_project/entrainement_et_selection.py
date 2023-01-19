@@ -1,6 +1,4 @@
 """
-# Description 
-
 Librairie ayant pour but d'entrainer et de sélectionner le modèle le plus adéquat pour les données.
 """
 import numpy as np
@@ -48,10 +46,10 @@ class Dataframes:
 
 
 def remplit_class(
-    fichier_peugeot="./veron_nepveux_project/donnees_peugeot.json",
-    fichier_citroen="./veron_nepveux_project/donnees_citroen.json",
-    fichier_fiat="./veron_nepveux_project/donnees_fiat.json",
-    fichier_opel="./veron_nepveux_project/donnees_opel.json",
+    fichier_peugeot="donnees_peugeot.json",
+    fichier_citroen="donnees_citroen.json",
+    fichier_fiat="donnees_fiat.json",
+    fichier_opel="donnees_opel.json",
 ) -> Dataframes:
     """
     # Description
