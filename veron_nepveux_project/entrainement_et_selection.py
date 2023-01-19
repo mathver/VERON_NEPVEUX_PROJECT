@@ -241,19 +241,17 @@ def selection_modele(
     knr_gs_be, knr_gs_bs, knr_gs_cv = knn(dfs.X_tr, dfs.y_tr)
     en_gs_be, en_gs_bs, en_gs_cv = elastic_net(dfs.X_tr, dfs.y_tr)
     duo_estimateur_score = [
-        [pln_gs_bs,svr_gs_bs,rfr_gs_bs,knr_gs_bs,en_gs_bs],
-        [pln_gs_be,svr_gs_be,rfr_gs_be,knr_gs_be,en_gs_be]
+        [pln_gs_bs, svr_gs_bs, rfr_gs_bs, knr_gs_bs, en_gs_bs],
+        [pln_gs_be, svr_gs_be, rfr_gs_be, knr_gs_be, en_gs_be],
     ]
     a = 0.0
     for i in duo_estimateur_score[0]:
         if a < i:
             a = i
-    
-    meilleur_estimateur = duo_estimateur_score[1][
-        duo_estimateur_score[0].index(a)
-        ]
-    test_surapprentissage = meilleur_estimateur.score(dfs.X_te,dfs.y_te)
-    if abs(a-test_surapprentissage) >0.15:
+
+    meilleur_estimateur = duo_estimateur_score[1][duo_estimateur_score[0].index(a)]
+    test_surapprentissage = meilleur_estimateur.score(dfs.X_te, dfs.y_te)
+    if abs(a - test_surapprentissage) > 0.15:
         raise ValueError("Le modèle est en surapprentissage")
     return save_meilleur_estimateur(meilleur_estimateur)
 

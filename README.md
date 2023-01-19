@@ -6,9 +6,11 @@ Le programme est divisé en deux grandes parties :
 
 - Scraping
 - Estimation
+
+---
 ## Scraping
 
-### Données 
+### **Données**
 
 Le site d'origine des données est le site [Spoticar](https://www.spoticar.fr). 
 
@@ -44,23 +46,71 @@ Chaque véhicule est ainsi codé sous la forme d'une classe `Voiture` comprennan
 | `critait` |Numérique| Indice Crit'air du véhicule | 
 | `ptac` |Numérique| PTAC du véhicule | 
 | `nb_portes` |Numérique| Nombre de portes |
+---
+### **Récupération des données**
 
-### Aperçu des données
+Le scraping fonctionne à l'aide du module `selenium` et du navigateur Chrome de Google (ainsi que son driver). 
+
+La fonction de scraping s'occupe d'ouvrir la page web, de gérer les cookies et d'ouvrir chaque annonce pour en récupérer les données. Cette fonction s'itère pour chaque marque permettant de réinitiliser le driver  à chaque fois et d'éviter une surcharge de ce dernier. 
+
+Les temps d'attente ont été minimisés, mais certains restent à l'aide de la fonction `sleep()` pour gérer les différents débit de connexion. 
+
+Chaque page de véhicule est stockée dans la classe `Voiture` précédemment évoquée et ajouté à une liste. 
+
+Lorsque les 600 annonces ont été scrapé, la fonction stocke cette liste dans un fichier `json` au nom de la marque permettant la séréalisation de celui-ci.
+
+---
+### **Aperçu des données**
 
 graphique à intégrer
 
-### Traitement des données
+---
+### **Traitement des données**
 
 Avant tout calcul de modèle, les données doivent subir un traitement permettant leur compatibilité avec le module `scikit-learn`. 
 
-La première étape est la gestion des données manquantes pour lesquelles s'offrent plusieurs solutions :
+Il faut premièrement unifier les données obtenues. Elles sont divisés en quatre fichiers `json` donc le nom est éponyme aux marques. Pour cela, on les ouvre et les concatène à l'aide de la fonction `concat` de `pandas` sous la forme d'un tableau de données (dataframe).
+ 
+La seconde étape est la gestion des données manquantes pour lesquelles s'offrent plusieurs solutions :
 
 - Suppression des observations
     - Le suppression d'observation réduit la taille de la base de données, chose que nous ne pouvons nous permettre de par le faible nombre d'observations. Cela les réduirait d'environ 1/3 et pourrait rendre le modèle faux.
 - Suppression de variables
     - Presque toutes les variables sont concernées par ce problème, cette solution n'est donc pas viable.
 - Imputation
-    - C'est la solution que nous avons choisie telle que :
+    - **C'est la solution que nous avons choisie telle que :**
         - Les variables numériques sont imputées par la moyenne.
         - les variables catégorielles et dichotomiques sont imputées par la valeur la plus présente.
+
+Une fois que toutes les données manquantes ont été imputées, il faut transformer les variables catégorielles en variables dichotomiques pour la compatibilité avec les modèles. Pour cela, on utilise la fonction `get_dummies()` de `pandas`.
+
+Elle transforme une variable catégorielle en autant de variables dichotomiques qu'il y a de modalités et fais prendre les valeurs 0 et 1 à ces dernières. On se retrouve alors avec un tableau de données comprennant une soixantaine de colonnes.
+
+Enfin, il suffit de transformer ce dataframe final en deux tableau du module `numpy` : 
+- L'un contenant les valeurs pour chaque variables.
+- L'autre contenant les prix.
+
+Ces deux tableaux finaux sont ceux que l'on utilisera pour calculer les modèles.
+
+---
+
+## Estimation
+### **Modèle utilisés**
+
+Les modèles utilisés sont tous tirés du module `scikit-learn`.
+
+Ils comprennent :
+
+- Elastic Net
+- Support Vector Machine
+- Random Forest
+- Multi-Layer Perceptron
+- KNN
+
+Les données sont divisés en deux splits avec un rapport 2/3 ; 1/3  :
+
++ Entraînement
++ Test
+
+Chaque modèle est entrainé par validation croisée sur le split d'entraînement permettant d'obtenir les paramètres optimaux parmi une liste préselectionnée.
 
