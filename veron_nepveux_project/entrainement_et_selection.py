@@ -288,7 +288,7 @@ def charge_meilleur_estimateur():
 
     Retourne le modèle extrait du fichier pkl.
     """
-    path = "./veron_nepveux_project/meilleur_estimateur.pkl"
+    path = "meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
     return est
@@ -370,17 +370,19 @@ def prix_predit_voiture(
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-    f = open("./veron_nepveux_project/donnees_UI.json", "w")
+    f = open("donnees_UI.json", "w")
     f.write(to_json(list_car))
     f.close()
-    car_df = data_frame_pandas("./veron_nepveux_project/donnees_UI.json")
-    df = assemblage_donnees()
+    car_df = data_frame_pandas("donnees_UI.json")
+    df = assemblage_donnees(
+        fichier_peugeot="donnees_peugeot.json",
+        fichier_citroen="donnees_citroen.json",
+        fichier_fiat="donnees_fiat.json",
+        fichier_opel="donnees_opel.json",
+    )
     df_fin = pd.concat([df, car_df], ignore_index=True)
     df_fin_cat = data_frame_dummies(df_fin)
     X_pred, y_pred = data_frame_sklearn(df_fin_cat)
     est_prix = pd.DataFrame(est.predict(X_pred)).iloc[-1][0].round()
 
     return est_prix, y_pred[-1]
-
-
-selection_modele()

@@ -16,7 +16,6 @@ from PyQt6.QtWidgets import (
     QCheckBox,
     QApplication,
     QMainWindow,
-    QDialog,
 )
 import os
 from PyQt6.QtCore import QRect, QProcess
@@ -28,7 +27,7 @@ class Ui_MainWindow(object):
     """
     # Description
 
-    Classe complexe et complète permettant à l'aide PyQt6 de développer une interface utilisateur l'autorisant à rentrer les informatiosn de son véhicule pour procéder
+    Classe complexe et complète permettant à l'aide PyQt6 de développer une interface utilisateur l'autorisant à rentrer les informations de son véhicule pour procéder
     à une estimation par la base de données scrappé et au modèle choisi.
     """
 
