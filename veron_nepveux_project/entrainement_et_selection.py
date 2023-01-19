@@ -149,7 +149,7 @@ def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray):
     rfr_gs = GridSearchCV(
         rfr,
         {
-            "n_estimators": (8, 16, 32, 64, 128, 256),
+            "n_estimators": (8, 16, 32, 64, 128, 256, 512),
         },
     )
     rfr_gs.fit(X_tr, y_tr)
