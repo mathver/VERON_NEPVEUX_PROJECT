@@ -40,8 +40,8 @@ def data_frame_modele(
 
 
 def assemblage_donnees(
-    fichier_peugeot: str = ".\donnees_peugeot.json",
-    fichier_citroen: str = ".\donnees_citroen.json",
+    fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
+    fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
 ) -> pd.core.frame.DataFrame:
     """
     # Description
@@ -129,13 +129,13 @@ def data_frame_imputation(df: pd.core.frame.DataFrame) -> pd.core.frame.DataFram
     # Description
 
     Fonction permettant d'imputer les valeurs manquantes `NaN` d'un dataframe.
-    
+
     Les données numériques sont imputées selon la moyenne, les données catégorielles selon la valeur majoritaire.
 
     ## Paramètres
     - df (pd.core.frame.DataFrame) : dataframe du module `pandas`.
-    
-    ## Sortie 
+
+    ## Sortie
 
     Un dataframe du module `pandas` sans données manquantes.
     """
@@ -149,13 +149,13 @@ def data_frame_dummies(df: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     # Description
 
     Fonction permettant de transformer les variables catégorielles en variables dichotomique.
-    
+
     On notera la création d'un certain nombre de colonnes par la fonction pour la création de ces variables.
 
     ## Paramètres
     - df (pd.core.frame.DataFrame) : dataframe du module `pandas`.
-    
-    ## Sortie 
+
+    ## Sortie
 
     Un dataframe du module `pandas` avec des variables dichotomique pour remplacer les catégorielles.
     """
@@ -206,8 +206,8 @@ def data_frame_sklearn(df: pd.core.frame.DataFrame) -> dict:
 
     ## Paramètres
     - df (pd.core.frame.DataFrame) : dataframe du module `pandas`.
-    
-    ## Sortie 
+
+    ## Sortie
 
     Deux dictionnaires permettant la compatibilité avec le module `sklearn`.
 
@@ -223,6 +223,7 @@ class DataFrameImputer(TransformerMixin):
     # Description
     Classe permettant de faciliter l'imputation des données dans la fonction `data_frame_imputation`.
     """
+
     def __init__(self):
         pass
 
@@ -240,4 +241,3 @@ class DataFrameImputer(TransformerMixin):
 
     def transform(self, df, y=None):
         return df.fillna(self.fill)
-

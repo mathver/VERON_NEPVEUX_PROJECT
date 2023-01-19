@@ -248,6 +248,51 @@ class Ui_MainWindow(object):
                 "SPACETOURER",
             ],
         )
+        self.comboBox_marque.addItem(
+            "Fiat",
+            [
+                "124",
+                "500",
+                "500L",
+                "500X",
+                "DOBLO",
+                "DUCATO",
+                "E-ULYSSE",
+                "FIORINO",
+                "FREEMONT",
+                "FULLBACK",
+                "PANDA",
+                "PUNTO",
+                "QUBO",
+                "SCUDO",
+                "SEDICI",
+                "TALENTO",
+                "TIPO",
+                "ULYSSE",
+            ],
+        )
+        self.comboBox_marque.addItem(
+            "Opel",
+            [
+                "ADAM",
+                "AGILA",
+                "ASTRA",
+                "CASCADA",
+                "COMBO",
+                "CORSE",
+                "CROSSLAND",
+                "GRANDLAND",
+                "INSIGNIA",
+                "KARL",
+                "MERIVA",
+                "MOKKA",
+                "MOVANO",
+                "VIVARO",
+                "ZAFIRA",
+                "ZAFIRA LIFE",
+                "ZAFIRA TOURER",
+            ],
+        )
         self.gridLayout.addWidget(self.comboBox_marque, 1, 0, 1, 1)
 
         self.comboBox_marque.currentIndexChanged.connect(self.updateModeleCombo)
