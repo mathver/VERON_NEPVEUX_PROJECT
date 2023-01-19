@@ -7,7 +7,7 @@ par la bibliothèque sklearn à partir des données scrapper précedemment.
 """
 
 from serde.json import from_json
-from .scrapping import Voiture
+from scrapping import Voiture
 import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin
@@ -16,6 +16,8 @@ from sklearn.base import TransformerMixin
 def data_frame_modele(
     fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
     fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
+    fichier_fiat: str = "./veron_nepveux_project/donnees_fiat.json",
+    fichier_opel: str = "./veron_nepveux_project/donnees_opel.json",
 ) -> dict:
     """
     # Description
@@ -34,14 +36,15 @@ def data_frame_modele(
 
     Deux dictionnaire crée par la fonction `data_frame_sklearn` permettant l'implémentation dans sklearn.
     """
-    df = assemblage_donnees(fichier_peugeot, fichier_citroen)
+    df = assemblage_donnees(
+        fichier_peugeot, fichier_citroen, fichier_fiat, fichier_opel
+    )
     data_fin = data_frame_dummies(df)
     return data_frame_sklearn(data_fin)
 
 
 def assemblage_donnees(
-    fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
-    fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
+    fichier_peugeot: str, fichier_citroen: str, fichier_fiat: str, fichier_opel: str
 ) -> pd.core.frame.DataFrame:
     """
     # Description
@@ -62,7 +65,9 @@ def assemblage_donnees(
     """
     df1 = data_frame_pandas(fichier_peugeot)
     df2 = data_frame_pandas(fichier_citroen)
-    df = pd.concat([df1, df2], ignore_index=True)
+    df3 = data_frame_pandas(fichier_fiat)
+    df4 = data_frame_pandas(fichier_opel)
+    df = pd.concat([df1, df2, df3, df4], ignore_index=True)
     return df
 
 

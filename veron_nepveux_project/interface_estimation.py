@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         """
         MainWindow.setObjectName("fenetre")
         MainWindow.resize(550, 550)
-        MainWindow.setWindowTitle("Estimation Peugeot")
+        MainWindow.setWindowTitle("Estimation véhicule")
         self.centralwidget = QWidget(MainWindow)
 
         self.centralwidget.setObjectName("centralwidget")
@@ -124,6 +124,9 @@ class Ui_MainWindow(object):
                 "Vert",
                 "Sable",
                 "Brun",
+                "Bordeaux",
+                "Or",
+                "Violet",
             )
         )
         self.gridLayout.addWidget(self.comboBox_couleur, 3, 1, 1, 1)
@@ -158,7 +161,22 @@ class Ui_MainWindow(object):
 
         self.comboBox_annee = QComboBox(self.layoutWidget_2)
         self.comboBox_annee.setObjectName("comboBox_annee")
-        self.comboBox_annee.addItems(("2018", "2019", "2020", "2021", "2022"))
+        self.comboBox_annee.addItems(
+            (
+                "2011",
+                "2012",
+                "2013",
+                "2014",
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021",
+                "2022",
+            )
+        )
 
         self.gridLayout.addWidget(self.comboBox_annee, 7, 0, 1, 1)
         self.label_annee = QLabel(self.layoutWidget_2)
@@ -180,7 +198,7 @@ class Ui_MainWindow(object):
 
         self.comboBox_places = QComboBox(self.layoutWidget_2)
         self.comboBox_places.setObjectName("comboBox_places")
-        self.comboBox_places.addItems(("1", "2", "3", "4", "5", "6", "7"))
+        self.comboBox_places.addItems(("4", "5", "6", "7", "8", "9"))
         self.gridLayout.addWidget(self.comboBox_places, 9, 0, 1, 1)
 
         self.label_places = QLabel(self.layoutWidget_2)
@@ -191,7 +209,7 @@ class Ui_MainWindow(object):
 
         self.comboBox_portes = QComboBox(self.layoutWidget_2)
         self.comboBox_portes.setObjectName("comboBox_portes")
-        self.comboBox_portes.addItems(("3", "5"))
+        self.comboBox_portes.addItems(("1", "2", "3", "4", "5"))
         self.gridLayout.addWidget(self.comboBox_portes, 9, 1, 1, 1)
 
         self.label_portes = QLabel(self.layoutWidget_2)
@@ -252,46 +270,34 @@ class Ui_MainWindow(object):
         self.comboBox_marque.addItem(
             "Fiat",
             [
-                "124",
                 "500",
                 "500L",
                 "500X",
                 "DOBLO",
                 "DUCATO",
-                "E-ULYSSE",
                 "FIORINO",
-                "FREEMONT",
-                "FULLBACK",
                 "PANDA",
-                "PUNTO",
-                "QUBO",
                 "SCUDO",
-                "SEDICI",
                 "TALENTO",
                 "TIPO",
-                "ULYSSE",
             ],
         )
         self.comboBox_marque.addItem(
             "Opel",
             [
                 "ADAM",
-                "AGILA",
                 "ASTRA",
                 "CASCADA",
                 "COMBO",
-                "CORSE",
+                "CORSA",
                 "CROSSLAND",
                 "GRANDLAND",
                 "INSIGNIA",
                 "KARL",
                 "MERIVA",
                 "MOKKA",
+                "MOVARO",
                 "MOVANO",
-                "VIVARO",
-                "ZAFIRA",
-                "ZAFIRA LIFE",
-                "ZAFIRA TOURER",
             ],
         )
         self.gridLayout.addWidget(self.comboBox_marque, 1, 0, 1, 1)

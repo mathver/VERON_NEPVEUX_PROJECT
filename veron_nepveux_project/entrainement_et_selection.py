@@ -48,7 +48,10 @@ class Dataframes:
 
 
 def remplit_class(
-    fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
+    fichier_peugeot="./veron_nepveux_project/donnees_peugeot.json",
+    fichier_citroen="./veron_nepveux_project/donnees_citroen.json",
+    fichier_fiat="./veron_nepveux_project/donnees_fiat.json",
+    fichier_opel="./veron_nepveux_project/donnees_opel.json",
 ) -> Dataframes:
     """
     # Description
@@ -64,7 +67,9 @@ def remplit_class(
 
     Un objet de classe Dataframes.
     """
-    X, y = data_frame_modele(fichier_peugeot, fichier_citroen)
+    X, y = data_frame_modele(
+        fichier_peugeot, fichier_citroen, fichier_fiat, fichier_opel
+    )
     X_tr, X_te, y_tr, y_te = train_test_split(X, y)
     return Dataframes(
         X=X,
@@ -217,9 +222,7 @@ def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
     return pln_gs.best_estimator_, pln_gs.best_score_, pln_gs.cv_results_
 
 
-def selection_modele(
-    fichier_peugeot="donnees_peugeot.json", fichier_citroen="donnees_citroen.json"
-):
+def selection_modele():
     """
     # Description
 
@@ -234,7 +237,7 @@ def selection_modele(
 
     Retourne le meilleur modèle parmi ceux estimés.
     """
-    dfs = remplit_class(fichier_peugeot, fichier_citroen)
+    dfs = remplit_class()
     pln_gs_be, pln_gs_bs, pln_gs_cv = multi_layer_regressor(dfs.X_tr, dfs.y_tr)
     svr_gs_be, svr_gs_bs, svr_gs_cv = svr_(dfs.X_tr, dfs.y_tr)
     rfr_gs_be, rfr_gs_bs, rfr_gs_cv = rd_foret(dfs.X_tr, dfs.y_tr)
@@ -378,3 +381,6 @@ def prix_predit_voiture(
     est_prix = pd.DataFrame(est.predict(X_pred)).iloc[-1][0].round()
 
     return est_prix, y_pred[-1]
+
+
+selection_modele()

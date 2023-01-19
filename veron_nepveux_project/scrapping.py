@@ -247,6 +247,7 @@ def recolt_data(
             nb_portes = "NA"
 
         (
+            marque,
             modele,
             carburant,
             prix,
@@ -266,6 +267,7 @@ def recolt_data(
             ptac,
             nb_portes,
         ) = formalisation(
+            marque,
             modele,
             carburant,
             prix,
@@ -324,6 +326,7 @@ def recolt_data(
 
 
 def formalisation(
+    marque,
     modele,
     carburant,
     prix,
@@ -377,9 +380,10 @@ def formalisation(
     """
     if modele == "NA":
         modele = modele
-    else:
+    elif marque == "peugeot" or "citroen":
         modele = modele[8:]
-
+    elif marque == "fiat" or "opel":
+        modele = modele[5:]
     carburant = carburant
 
     if kilometrage == "NA":

@@ -62,7 +62,14 @@ Lorsque les 600 annonces ont été scrapé, la fonction stocke cette liste dans 
 ---
 ### **Aperçu des données**
 
-graphique à intégrer
+![](output.png)
+
+
+Les deux graphiques permettent de rendre compte de la répartition des prix et du kilométrage dans la base de données compris avec ce projet.
+
+On y observe des prix centré autour de 20 000 € et des kilométrages décroissant mais plus présent dans des valeurs inférieurs à 40 000 km. Cela s'explique par le type de véhicule vendus par Spoticar.
+
+*NB : les graphiques peuvent changer si le scraping est relancé.*
 
 ---
 ### **Traitement des données**
@@ -109,8 +116,49 @@ Ils comprennent :
 
 Les données sont divisés en deux splits avec un rapport 2/3 ; 1/3  :
 
-+ Entraînement
-+ Test
+1. Entraînement
+2. Test
 
 Chaque modèle est entrainé par validation croisée sur le split d'entraînement permettant d'obtenir les paramètres optimaux parmi une liste préselectionnée.
 
+Une fonction permet ensuite de calculer le meilleur estimateur, de vérifier que celui-ci ne fait pas de sur-apprentissage à l'aide des données test et de le sauvegarder dans un fichier au format `pickle`.
+
+*NB : le meilleur modèle est recalculé si le scraping est relancé.*
+
+Concernant l'estimation du prix du véhicule de l'utilisateur, cette partie sera traitée dans la partie interface.
+
+---
+
+## Interface utilisateur
+
+Ce projet est composé de deux interfaces différentes. La première offrant le choix à l'utilisateur de lancer le scraping ou d'estimer son véhicule. La seconde découlant de la première permet à l'utilisateur de donner les paramètres de son véhicule.
+
+### **Interface textuelle**
+
+L'interface textuelle a été codée à l'aide du module `typer`. 
+
+Pour lancer l'interface, il suffit d'exécuter la commande suivante :
+
+```sh
+py -m veron_nepveux_project main.py --help
+```
+
+Cette commande permet d'afficher les deux commandes disponibles.
+
+Il est ensuite possible de lancer le scraping :
+
+```sh
+py -m veron_nepveux_project main.py scraping
+```
+
+ou l'estimation :
+
+```sh
+py -m veron_nepveux_project main.py estimation
+```
+
+Lancer la commande d'estimation abouti à cette interface : 
+
+![Inter](interface.png)
+
+Lorsque l'utilisateur valide, le modèle précédemment choisi estime le prix prédit de la voiture et le retourne ainsi que le prix d'origine en fournissant la différence de prix entre les deux dans la commande.
