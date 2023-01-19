@@ -24,7 +24,7 @@ def scraping():
 
     Les marques disponibles sont : Peugeot, Citroën, Opel et Fiat.
     """
-    scrap_marque("https://www.spoticar.fr", ("Peugeot", "Citroën", "Opel", "Fiat"))
+    scrap_marque("https://www.spoticar.fr", ("peugeot", "citroen", "opel", "fiat"))
 
 
 @app.command()
