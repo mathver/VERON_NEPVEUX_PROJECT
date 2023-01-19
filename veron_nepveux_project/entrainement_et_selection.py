@@ -11,7 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
 from dataclasses import dataclass
-from conversion_df import (
+from veron_nepveux_project.conversion_df import (
     data_frame_modele,
     data_frame_pandas,
     data_frame_dummies,
