@@ -1,6 +1,5 @@
 from os.path import exists
 from veron_nepveux_project.scrapping import Voiture, formalisation, scrap_marque
-import pytest
 
 
 def test_Voiture():

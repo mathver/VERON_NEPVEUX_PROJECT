@@ -1,5 +1,7 @@
 """
-Librairie de scrapping permettant la récupération de données sur le site spoticar pour différentes marques de voiture, et transformant les données en fichier .json. 
+Librairie de scrapping permettant la récupération de données
+sur le site spoticar pour différentes marques de voiture,
+et transformant les données en fichier .json.
 """
 
 from selenium import webdriver
@@ -14,6 +16,7 @@ from serde import serde
 from serde.json import to_json
 from dataclasses import dataclass
 from time import sleep
+from typing import Union
 
 
 @serde
@@ -50,22 +53,22 @@ class Voiture:
     marque: str
     modele: str
     carburant: str
-    prix: int
-    kilometrage: int
+    prix: int | str
+    kilometrage: int | str
     garantie_kilometrage: str
     boite_de_vitesse: str
-    transmission: int
+    transmission: int | str
     couleur: str
     garantie: str
-    date_mise_circulation: int
-    puissance: int
+    date_mise_circulation: int | str
+    puissance: int | str
     silhouette: str
-    nb_places: int
+    nb_places: int | str
     utilisation_prec: str
-    puissance_fiscale: int
-    critair: int
-    ptac: int
-    nb_portes: int
+    puissance_fiscale: int | str
+    critair: int | str
+    ptac: int | str
+    nb_portes: int | str
 
 
 URL = "https://www.spoticar.fr"
@@ -79,7 +82,8 @@ def accept_cookies(driver: webdriver.chrome.webdriver.WebDriver) -> None:
 
     ## Paramètres
 
-    - driver (webdriver.chrome.webdriver.WebDriver): Driver utilisé avec `Selenium` pour ouvrir la page web.
+    - driver (webdriver.chrome.webdriver.WebDriver): Driver utilisé
+    avec `Selenium` pour ouvrir la page web.
     """
     button = WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.ID, "_psaihm_id_accept_all_btn"))
@@ -93,12 +97,14 @@ def recolt_data(
     """
     # Description
 
-    Fonction permettant la récupération des données sur chaque fiche véhicule du site pour ensuite créer un fichier json par marque
+    Fonction permettant la récupération des données sur chaque fiche véhicule
+    du site pour ensuite créer un fichier json par marque
     de véhicule.
 
     ## Paramètres
 
-    - driver (webdriver.chrome.webdriver.WebDriver):  driver utilisé avec `Selenium` pour ouvrir la page web.
+    - driver (webdriver.chrome.webdriver.WebDriver):  driver utilisé avec
+    `Selenium` pour ouvrir la page web.
     - marque (str): marque des véhicules à scraper.
     """
     car_list = list()
@@ -328,30 +334,31 @@ def recolt_data(
 
 
 def formalisation(
-    marque,
-    modele,
-    carburant,
-    prix,
-    kilometrage,
-    garantie_kilometrage,
-    boite_de_vitesse,
-    transmission,
-    couleur,
-    garantie,
-    date_mise_circulation,
-    puissance,
-    silhouette,
-    nb_places,
-    utilisation_prec,
-    puissance_fiscale,
-    critair,
-    ptac,
-    nb_portes,
-) -> str | int:
+    marque: str,
+    modele: str,
+    carburant: str,
+    prix: str,
+    kilometrage: str,
+    garantie_kilometrage: str,
+    boite_de_vitesse: str,
+    transmission: str,
+    couleur: str,
+    garantie: str,
+    date_mise_circulation: str,
+    puissance: str,
+    silhouette: str,
+    nb_places: str,
+    utilisation_prec: str,
+    puissance_fiscale: str,
+    critair: str,
+    ptac: str,
+    nb_portes: str,
+) -> Union[str, int]:
     """
     # Description
 
-    Fonction permettant la formalisation des données récupérées pour chaque véhicule en ne gardant que les nombres pour les valeurs
+    Fonction permettant la formalisation des données récupérées pour
+    chaque véhicule en ne gardant que les nombres pour les valeurs
     numériques, et des catégories pour le reste.
 
     ## Paramètres
@@ -394,10 +401,7 @@ def formalisation(
     if kilometrage == "NA":
         kilometrage = kilometrage
     else:
-        try:
-            kilometrage = int(str(kilometrage[:-3]).replace(" ", ""))
-        except:
-            kilometrage = kilometrage
+        kilometrage = int(str(kilometrage[:-3]).replace(" ", ""))
 
     if prix == "NA":
         prix = prix
@@ -501,7 +505,8 @@ def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
     """
     # Description
 
-    Fonction permettant d'ouvrir la page web, d'accéder aux fiches véhicules, de récupérer les données et de les stocker. La fonction
+    Fonction permettant d'ouvrir la page web, d'accéder aux fiches véhicules,
+    de récupérer les données et de les stocker. La fonction
     se répète sur les quatres marques (Peugeot, Citroën, Opel et Fiat).
 
     ## Paramètres

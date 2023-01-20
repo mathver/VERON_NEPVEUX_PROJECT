@@ -23,6 +23,7 @@ from pickle import load, dump
 from veron_nepveux_project.scrapping import Voiture
 import pandas as pd
 from serde.json import to_json
+from typing import Any, Union
 
 STOCKAGE = "./stockage/"
 
@@ -33,7 +34,8 @@ class Dataframes:
     """
     # Description
 
-    Dataclass permettant le création d'un dataframe compatible avec le module `sklearn` contenant les données originelles
+    Dataclass permettant le création d'un dataframe compatible
+    avec le module `sklearn` contenant les données originelles
     et les splits d'entraînements et de tests des modèles.
     """
 
@@ -46,15 +48,16 @@ class Dataframes:
 
 
 def remplit_class(
-    fichier_peugeot="./veron_nepveux_project/donnees_peugeot.json",
-    fichier_citroen="./veron_nepveux_project/donnees_citroen.json",
-    fichier_fiat="./veron_nepveux_project/donnees_fiat.json",
-    fichier_opel="./veron_nepveux_project/donnees_opel.json",
+    fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
+    fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
+    fichier_fiat: str = "./veron_nepveux_project/donnees_fiat.json",
+    fichier_opel: str = "./veron_nepveux_project/donnees_opel.json",
 ) -> Dataframes:
     """
     # Description
 
-    Fonction permettant la création d'un objet de classe `Dataframes` à partir des fichiers de données json.
+    Fonction permettant la création d'un objet de classe
+    `Dataframes` à partir des fichiers de données json.
 
     ## Paramètres
 
@@ -79,7 +82,7 @@ def remplit_class(
     )
 
 
-def elastic_net(X_tr: np.ndarray, y_tr: np.ndarray):
+def elastic_net(X_tr: np.ndarray, y_tr: np.ndarray) -> Union[Any, Any, Any]:
     """
     # Description
 
@@ -106,7 +109,7 @@ def elastic_net(X_tr: np.ndarray, y_tr: np.ndarray):
     return en_gs.best_estimator_, en_gs.best_score_, en_gs.cv_results_
 
 
-def knn(X_tr: np.ndarray, y_tr: np.ndarray):
+def knn(X_tr: np.ndarray, y_tr: np.ndarray) -> Union[Any, Any, Any]:
     """
     # Description
 
@@ -133,7 +136,7 @@ def knn(X_tr: np.ndarray, y_tr: np.ndarray):
     return knr_gs.best_estimator_, knr_gs.best_score_, knr_gs.cv_results_
 
 
-def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray):
+def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray) -> Union[Any, Any, Any]:
     """
     # Description
 
@@ -159,7 +162,7 @@ def rd_foret(X_tr: np.ndarray, y_tr: np.ndarray):
     return rfr_gs.best_estimator_, rfr_gs.best_score_, rfr_gs.cv_results_
 
 
-def svr_(X_tr: np.ndarray, y_tr: np.ndarray):
+def svr_(X_tr: np.ndarray, y_tr: np.ndarray) -> Union[Any, Any, Any]:
     """
     # Description
 
@@ -187,11 +190,12 @@ def svr_(X_tr: np.ndarray, y_tr: np.ndarray):
     return svr_gs.best_estimator_, svr_gs.best_score_, svr_gs.cv_results_
 
 
-def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
+def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray) -> Union[Any, Any, Any]:
     """
     # Description
 
-    Fonction permettant le calcul du modèle de régression multi-couches (réseau neuronal artificiel) sur les données précedemment choisies.
+    Fonction permettant le calcul du modèle de régression multi-couches
+    (réseau neuronal artificiel) sur les données précedemment choisies.
 
     ## Paramètres
 
@@ -220,7 +224,7 @@ def multi_layer_regressor(X_tr: np.ndarray, y_tr: np.ndarray):
     return pln_gs.best_estimator_, pln_gs.best_score_, pln_gs.cv_results_
 
 
-def selection_modele():
+def selection_modele() -> None:
     """
     # Description
 
@@ -257,7 +261,7 @@ def selection_modele():
     return save_meilleur_estimateur(meilleur_estimateur)
 
 
-def save_meilleur_estimateur(meilleur_estimateur: Pipeline):
+def save_meilleur_estimateur(meilleur_estimateur: Pipeline) -> None:
     """
     # Description
 
@@ -276,7 +280,7 @@ def save_meilleur_estimateur(meilleur_estimateur: Pipeline):
         dump(obj=meilleur_estimateur, file=file)
 
 
-def charge_meilleur_estimateur():
+def charge_meilleur_estimateur() -> Any:
     """
     # Description
 

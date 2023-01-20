@@ -34,6 +34,8 @@ def estimation():
     """
     import interface_estimation
 
+    interface_estimation
+
 
 if __name__ == "__main__":
     app()

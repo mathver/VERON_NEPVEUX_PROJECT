@@ -1,5 +1,6 @@
 """
-Librairie permettant la création d'une interface graphique pour l'interaction utilisateur et l'estimation du prix de son véhicule.
+Librairie permettant la création d'une interface graphique
+pour l'interaction utilisateur et l'estimation du prix de son véhicule.
 """
 
 from PyQt6 import QtCore, QtGui
@@ -17,7 +18,6 @@ from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
 )
-import os
 from PyQt6.QtCore import QRect, QProcess
 from entrainement_et_selection import prix_predit_voiture
 from rich import print
@@ -27,8 +27,10 @@ class Ui_MainWindow(object):
     """
     # Description
 
-    Classe complexe et complète permettant à l'aide PyQt6 de développer une interface utilisateur l'autorisant à rentrer les informations de son véhicule pour procéder
-    à une estimation par la base de données scrappé et au modèle choisi.
+    Classe complexe et complète permettant à l'aide PyQt6 de développer
+    une interface utilisateur l'autorisant à rentrer les informations
+    de son véhicule pour procéder à une estimation par la base de données
+    scrappé et au modèle choisi.
     """
 
     def setupUi(self, MainWindow):
@@ -322,8 +324,6 @@ class Ui_MainWindow(object):
         self.comboBox_critair.addItems(("1", "2", "3", "4", "5"))
         self.gridLayout.addWidget(self.comboBox_critair, 11, 0, 1, 1)
 
-        #################################################################################################
-
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout_2 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -409,8 +409,6 @@ class Ui_MainWindow(object):
         self.spinBox_kil.setObjectName("spinBox_kil")
         self.verticalLayout_2.addWidget(self.spinBox_kil)
 
-        ########################################################################################################
-
         self.label_garanties_titre = QLabel(self.centralwidget)
         self.label_garanties_titre.setGeometry(QRect(320, 310, 201, 31))
         font_garanties_titre = QtGui.QFont()
@@ -466,7 +464,8 @@ class Ui_MainWindow(object):
         """
         # Description
 
-        Fonction interne permettant l'actualisation des modèles disponibles à la sélection selon la marque sélectionnée par
+        Fonction interne permettant l'actualisation des modèles
+        disponibles à la sélection selon la marque sélectionnée par
         l'utilisateur.
         """
         self.comboBox_modele.clear()
@@ -478,14 +477,11 @@ class Ui_MainWindow(object):
         """
         # Description
 
-        Fonction interne permettant de relier le processus d'estimation du module `entrainement_et_selection` aux paramètres
+        Fonction interne permettant de relier le processus
+        d'estimation du module `entrainement_et_selection` aux paramètres
         rentrés par l'utilisateur dans l'UI, et de lancer l'estimation.
         """
-        self.p = (
-            QProcess()
-        )  # Keep a reference to the QProcess (e.g. on self) while it's running.
-        path = os.path.dirname(os.path.realpath(__file__))
-
+        self.p = QProcess()
         marque = str(self.comboBox_marque.currentText())
         modele = str(self.comboBox_modele.currentText())
         silhouette = str(self.comboBox_silhouette.currentText())
@@ -505,12 +501,13 @@ class Ui_MainWindow(object):
         critair = int(self.comboBox_critair.currentText())
         garantie = str(self.comboBox_gar.currentText())
 
-        if self.checkBox_kilgar.isChecked() == True:
+        if self.checkBox_kilgar.isChecked():
             gar_kil = "garanti"
         else:
             gar_kil = "non garanti"
         marque, modele, carburant, prix, kilometrage, gar_kil, bdv, transmission, couleur,
-        garantie, annee, puissance, silhouette, nb_places, util_prec, puissance_fiscal, critair, ptac, nb_portes
+        garantie, annee, puissance, silhouette, nb_places, util_prec,
+        puissance_fiscal, critair, ptac, nb_portes
         prix_pred, prix_reel = prix_predit_voiture(
             marque,
             modele,
@@ -533,7 +530,9 @@ class Ui_MainWindow(object):
             nb_portes,
         )
         print(
-            f"Le prix prédit est {prix_pred} €, alors que le prix réel est de {prix_reel} €, soit une différence de {abs(prix_reel - prix_pred)} €"
+            f"""Le prix prédit est {prix_pred} €,
+            alors que le prix réel est de {prix_reel} €,
+            soit une différence de {abs(prix_reel - prix_pred)} €"""
         )
 
 

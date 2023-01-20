@@ -1,5 +1,4 @@
 from veron_nepveux_project.entrainement_et_selection import Dataframes, remplit_class
-import pytest
 
 
 def test_Dataframes():
