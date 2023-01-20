@@ -370,15 +370,16 @@ def prix_predit_voiture(
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-    f = open("veron_nepveux_project/donnees_UI.json", "w")
+    path = veron_nepveux_project.scraping.__file__[:-11]
+    f = open(path + "donnees_UI.json", "w")
     f.write(to_json(list_car))
     f.close()
-    car_df = data_frame_pandas("veron_nepveux_project/donnees_UI.json")
+    car_df = data_frame_pandas(path + "donnees_UI.json")
     df = assemblage_donnees(
-        fichier_peugeot="veron_nepveux_project/donnees_peugeot.json",
-        fichier_citroen="veron_nepveux_project/donnees_citroen.json",
-        fichier_fiat="veron_nepveux_project/donnees_fiat.json",
-        fichier_opel="veron_nepveux_project/donnees_opel.json",
+        fichier_peugeot=path + "donnees_peugeot.json",
+        fichier_citroen=path + "donnees_citroen.json",
+        fichier_fiat=path + "donnees_fiat.json",
+        fichier_opel=path + "donnees_opel.json",
     )
     df_fin = pd.concat([df, car_df], ignore_index=True)
     df_fin_cat = data_frame_dummies(df_fin)
