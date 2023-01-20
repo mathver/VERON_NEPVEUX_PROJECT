@@ -27,8 +27,6 @@ from serde.json import to_json
 from typing import Any, Union
 import os
 
-STOCKAGE = "./stockage/"
-
 
 @serde
 @dataclass
@@ -50,21 +48,31 @@ class Dataframes:
 
 
 def remplit_class(
-    fichier_peugeot: str = "./veron_nepveux_project/donnees_peugeot.json",
-    fichier_citroen: str = "./veron_nepveux_project/donnees_citroen.json",
-    fichier_fiat: str = "./veron_nepveux_project/donnees_fiat.json",
-    fichier_opel: str = "./veron_nepveux_project/donnees_opel.json",
+    fichier_peugeot: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_peugeot.json",
+    fichier_citroen: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_citroen.json",
+    fichier_fiat: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_fiat.json",
+    fichier_opel: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_opel.json",
 ) -> Dataframes:
     """
     # Description
 
     Fonction permettant la création d'un objet de classe
-    `Dataframes` à partir des fichiers de données json.
+    `Dataframes` à partir des fichiers de fichiers json.
 
     ## Paramètres
 
-    - fichier_peugeot (str): Fichier json contenant les données de la marque Peugeot.
-    - fichier_citroen (str): Fichier json contenant les données de la marque Citroën.
+    - fichier_peugeot (str): Fichier contenant les données de la marque Peugeot.\\
+    Valeur par défault : "donnees_peugeot.json"
+    - fichier_citroen (str): Fichier contenant les données de la marque Citroën.\\
+    Valeur par défault : "donnees_citroen.json"
+    - fichier_fiat (str): Fichier contenant les données de la marque Fiat.\\
+    Valeur par défault : "donnees_fiat.json"
+    - fichier_opel (str): Fichier contenant les données de la marque Opel.\\
+    Valeur par défault : "donnees_opel.json"
 
     ## Sortie
 
@@ -370,9 +378,9 @@ def prix_predit_voiture(
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-    path = veron_nepveux_project.scraping.__file__[
-        :-11
-    ]  # Obliger de passer par cette horrible pôur avoir le bon path du fichier
+    path = veron_nepveux_project.scraping.__file__[:-11]
+    # Obliger de passer par cette horrible formule pour avoir le bon path du
+    # fichier quand exécution depuis python
     f = open(path + "donnees_UI.json", "w")
     f.write(to_json(list_car))
     f.close()

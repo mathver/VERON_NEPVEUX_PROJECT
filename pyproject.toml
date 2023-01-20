@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "veron-nepveux-project"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Mathieu <mathieuveron@outlook.fr>, Baptiste <baptiste.nepveux@icloud.com>"]
 readme = "README.md"

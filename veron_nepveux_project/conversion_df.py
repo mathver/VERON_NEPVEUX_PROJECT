@@ -36,6 +36,10 @@ def data_frame_modele(
     Valeur par défault : "donnees_peugeot.json"
     - fichier_citroen (str): Fichier contenant les données de la marque Citroën.\\
     Valeur par défault : "donnees_citroen.json"
+    - fichier_fiat (str): Fichier contenant les données de la marque Fiat.\\
+    Valeur par défault : "donnees_fiat.json"
+    - fichier_opel (str): Fichier contenant les données de la marque Opel.\\
+    Valeur par défault : "donnees_opel.json"
 
     ## Sortie
 
@@ -61,10 +65,10 @@ def assemblage_donnees(
 
     ## Paramètres
 
-    - fichier_peugeot (str): Fichier contenant les données de la marque Peugeot.\\
-    Valeur par défault : "donnees_peugeot.json"
-    - fichier_citroen (str): Fichier contenant les données de la marque Citroën.\\
-    Valeur par défault : "donnees_citroen.json"
+    - fichier_peugeot (str): Fichier contenant les données de la marque Peugeot.
+    - fichier_citroen (str): Fichier contenant les données de la marque Citroën.
+    - fichier_fiat (str): Fichier contenant les données de la marque Fiat.
+    - fichier_opel (str): Fichier contenant les données de la marque Opel.
 
     ## Sortie
 
@@ -85,8 +89,7 @@ def _ouverture_fichier(donnees: str) -> str:
     Fonction permettant d'ouvrir le fichier json pour en extraitre les données après.
 
     ## Paramètres
-    - donnees (str): Fichier contenant les données de la marque Peugeot.\\
-    Valeur par défault : "donnees_peugeot.json"
+    - donnees (str): Fichier contenant les données de la marque.
 
     ## Sortie
 
@@ -124,8 +127,7 @@ def data_frame_pandas(fichier: str) -> pd.core.frame.DataFrame:
     classe `Voiture`.
 
     ## Paramètres
-    - fichier (str): fichier json contenant les données.\\
-        Valeur par défaut : 'donnees_peugeot.json'
+    - fichier (str): fichier json contenant les données.
 
     ## Sortie
 

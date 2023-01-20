@@ -107,6 +107,11 @@ def recolt_data(
     - driver (webdriver.chrome.webdriver.WebDriver):  driver utilisé avec
     `Selenium` pour ouvrir la page web.
     - marque (str): marque des véhicules à scraper.
+
+    ## Sortie
+
+    Une liste d'objet `Voiture`
+
     """
     car_list = list()
     for i in range(1, max):
@@ -386,7 +391,7 @@ def formalisation(
 
     ## Sortie
 
-    Les variables typés de la bonne façon.
+    Les variables typées de la bonne façon.
     """
     if modele == "NA":
         modele = modele
@@ -517,7 +522,7 @@ def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
 
     ## Sortie
 
-    Quatre fichiers json chacun correspond à une marque et composés d'objets de la classe `Voiture`.
+    Quatre fichiers json chacun correspondant à une marque et composés d'objets de la classe `Voiture`.
     """
     for marque in marques:
         driver = webdriver.Chrome(

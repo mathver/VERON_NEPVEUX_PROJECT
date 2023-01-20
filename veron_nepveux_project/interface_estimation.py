@@ -531,8 +531,8 @@ class Ui_MainWindow(object):
         )
         print(
             f"""Le prix prédit est {prix_pred} €,
-            alors que le prix réel est de {prix_reel} €,
-            soit une différence de {abs(prix_reel - prix_pred)} €"""
+        alors que le prix réel est de {prix_reel} €,
+        soit une différence de {abs(prix_reel - prix_pred)} €"""
         )
 
 

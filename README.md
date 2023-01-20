@@ -140,7 +140,7 @@ L'interface textuelle a été codée à l'aide du module `typer`.
 Pour lancer l'interface, il suffit d'exécuter la commande suivante :
 
 ```sh
-py -m veron_nepveux_project main.py --help
+py -m veron_nepveux_project --help
 ```
 
 Cette commande permet d'afficher les deux commandes disponibles.
