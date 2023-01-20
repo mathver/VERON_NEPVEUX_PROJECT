@@ -21,6 +21,7 @@ from veron_nepveux_project.conversion_df import (
 from serde import serde
 from pickle import load, dump
 from veron_nepveux_project.scraping import Voiture
+import veron_nepveux_project.scraping
 import pandas as pd
 from serde.json import to_json
 from typing import Any, Union
@@ -286,10 +287,9 @@ def charge_meilleur_estimateur() -> Any:
 
     Retourne le modèle extrait du fichier pkl.
     """
-    path = os.path.abspath("entrainement_et_selection.py")
-    dir_path = os.path.dirname(path).replace('\\', '/')
-
-    with open(dir_path, "rb") as file:
+    path = veron_nepveux_project.scraping.__file__[:-11]
+    file = path + "meilleur_estimateur.pkl"
+    with open(file, "rb") as file:
         est = load(file=file)
     return est
 
