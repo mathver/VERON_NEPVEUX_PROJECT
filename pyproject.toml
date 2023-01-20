@@ -7,20 +7,17 @@ readme = "README.md"
 packages = [{include = "veron_nepveux_project"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 pyqt6 = "^6.4.0"
 qt-material = "^2.12"
 rich = "^13.0.1"
 scikit-learn = "^1.2.0"
-seaborn = "^0.12.2"
-matplotlib = "^3.6.2"
 numpy = "^1.24.1"
 pandas = "^1.5.2"
 typer = "^0.7.0"
 selenium = "^4.7.2"
 webdriver-manager = "^3.8.5"
 pyserde = "^0.9.7"
-pytest-cov = "^4.0.0"
 serde = "^0.9.0"
 
 
