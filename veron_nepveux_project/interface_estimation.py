@@ -19,7 +19,7 @@ from PyQt6.QtWidgets import (
     QMainWindow,
 )
 from PyQt6.QtCore import QRect, QProcess
-from entrainement_et_selection import prix_predit_voiture
+from veron_nepveux_project.entrainement_et_selection import prix_predit_voiture
 from rich import print
 
 

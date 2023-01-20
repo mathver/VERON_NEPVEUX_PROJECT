@@ -117,7 +117,7 @@ test-no-images = ["pytest"]
 name = "coverage"
 version = "7.0.5"
 description = "Code coverage measurement for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -174,7 +174,7 @@ python-versions = ">=3.5"
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -381,7 +381,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.2.2)", "pytest (>=7.2)", "pytest-
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -534,7 +534,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "pytest"
 version = "7.2.1"
 description = "pytest: simple powerful testing with Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -552,7 +552,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.
 name = "pytest-cov"
 version = "4.0.0"
 description = "Pytest plugin for measuring coverage."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -704,6 +704,17 @@ certifi = ">=2021.10.8"
 trio = ">=0.17,<1.0"
 trio-websocket = ">=0.9,<1.0"
 urllib3 = {version = ">=1.26,<2.0", extras = ["socks"]}
+
+[[package]]
+name = "serde"
+version = "0.9.0"
+description = "Define, serialize, deserialize, and validate Python data structures."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+ext = ["chardet (>=3.0.0,<4.0.0)", "validators (>=0.12.0)"]
 
 [[package]]
 name = "setuptools"
@@ -903,7 +914,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "02a0db2846959a089302655bf6de1a577a4b2fc7d4f3ca0ac9b21e2986adf88a"
+content-hash = "df033cb5026c1a69aa99527b13f4b533e881a01bb5aefa05fcdb8f5d05fec2a5"
 
 [metadata.files]
 async-generator = [
@@ -1754,6 +1765,10 @@ seaborn = [
 selenium = [
     {file = "selenium-4.7.2-py3-none-any.whl", hash = "sha256:06a1c7d9f313130b21c3218ddd8852070d0e7419afdd31f96160cd576555a5ce"},
     {file = "selenium-4.7.2.tar.gz", hash = "sha256:3aefa14a28a42e520550c1cd0f29cf1d566328186ea63aa9a3e01fb265b5894d"},
+]
+serde = [
+    {file = "serde-0.9.0-py3-none-any.whl", hash = "sha256:4887a2077209ef34214be3a18c7796cf442621e30830859c7659fbd784dff299"},
+    {file = "serde-0.9.0.tar.gz", hash = "sha256:5dbbf0910e736d9136a97b8e9b301b76a9f3b19f88d45bc5974b0fc68a5bc3fb"},
 ]
 setuptools = [
     {file = "setuptools-66.0.0-py3-none-any.whl", hash = "sha256:a78d01d1e2c175c474884671dde039962c9d74c7223db7369771fcf6e29ceeab"},

@@ -20,7 +20,7 @@ from veron_nepveux_project.conversion_df import (
 )
 from serde import serde
 from pickle import load, dump
-from veron_nepveux_project.scrapping import Voiture
+from veron_nepveux_project.scraping import Voiture
 import pandas as pd
 from serde.json import to_json
 from typing import Any, Union
@@ -230,11 +230,6 @@ def selection_modele() -> None:
 
     Fonction permettant de choisir parmi les modèles estimés le plus adaptés aux données.
 
-    ## Paramètres
-
-    - fichier_peugeot (str): Fichier json contenant les données de la marque Peugeot.
-    - fichier_citroen (str): Fichier json contenant les données de la marque Citroën.
-
     ## Sortie
 
     Retourne le meilleur modèle parmi ceux estimés.
@@ -290,7 +285,7 @@ def charge_meilleur_estimateur() -> Any:
 
     Retourne le modèle extrait du fichier pkl.
     """
-    path = "meilleur_estimateur.pkl"
+    path = "./veron_nepveux_project/meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
     return est
@@ -372,15 +367,15 @@ def prix_predit_voiture(
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-    f = open("donnees_UI.json", "w")
+    f = open("./veron_nepveux_project/donnees_UI.json", "w")
     f.write(to_json(list_car))
     f.close()
-    car_df = data_frame_pandas("donnees_UI.json")
+    car_df = data_frame_pandas("./veron_nepveux_project/donnees_UI.json")
     df = assemblage_donnees(
-        fichier_peugeot="donnees_peugeot.json",
-        fichier_citroen="donnees_citroen.json",
-        fichier_fiat="donnees_fiat.json",
-        fichier_opel="donnees_opel.json",
+        fichier_peugeot="./veron_nepveux_project/donnees_peugeot.json",
+        fichier_citroen="./veron_nepveux_project/donnees_citroen.json",
+        fichier_fiat="./veron_nepveux_project/donnees_fiat.json",
+        fichier_opel="./veron_nepveux_project/donnees_opel.json",
     )
     df_fin = pd.concat([df, car_df], ignore_index=True)
     df_fin_cat = data_frame_dummies(df_fin)

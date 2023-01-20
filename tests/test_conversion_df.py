@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import veron_nepveux_project.conversion_df as conv
-from veron_nepveux_project.scrapping import Voiture
+from veron_nepveux_project.scraping import Voiture
 
 
 def test_dataframe_modele():

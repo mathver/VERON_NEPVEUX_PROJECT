@@ -3,7 +3,8 @@ Librairie qui permet la création d'une interface en ligne de commande pour l'en
 """
 
 import typer
-from scrapping import scrap_marque
+from veron_nepveux_project.scraping import scrap_marque
+from veron_nepveux_project.entrainement_et_selection import selection_modele
 
 
 app = typer.Typer()
@@ -25,6 +26,7 @@ def scraping():
     Les marques disponibles sont : Peugeot, Citroën, Opel et Fiat.
     """
     scrap_marque("https://www.spoticar.fr", ("peugeot", "citroen", "opel", "fiat"))
+    selection_modele()
 
 
 @app.command()
@@ -32,7 +34,7 @@ def estimation():
     """
     Commande permettant d'ouvrir l'UI pour l'estimation du prix du véhicule de l'utilisateur.
     """
-    import interface_estimation
+    import veron_nepveux_project.interface_estimation as interface_estimation
 
     interface_estimation
 
