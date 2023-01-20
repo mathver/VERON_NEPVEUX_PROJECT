@@ -270,7 +270,7 @@ def save_meilleur_estimateur(meilleur_estimateur: Pipeline) -> None:
 
     Retourne un fichier pkl contenant le modèle.
     """
-    path = "./veron_nepveux_project/meilleur_estimateur.pkl"
+    path = ".\\veron_nepveux_project\\meilleur_estimateur.pkl"
     with open(path, "wb") as file:
         dump(obj=meilleur_estimateur, file=file)
 
