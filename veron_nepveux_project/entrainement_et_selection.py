@@ -286,8 +286,12 @@ def charge_meilleur_estimateur() -> Any:
 
     Retourne le modèle extrait du fichier pkl.
     """
+    dir = os.path.dirname(os.path.realpath("entrainement_et_selection.py"))
+    filename = os.path.join(dir, "meilleur_estimateur.pkl")
 
-    with open("meilleur_estimateur.pkl", "rb") as file:
+    filename = filename.replace("\\", "/")
+
+    with open(filename, "rb") as file:
         est = load(file=file)
     return est
 
