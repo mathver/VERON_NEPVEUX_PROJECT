@@ -148,13 +148,15 @@ Cette commande permet d'afficher les deux commandes disponibles.
 Il est ensuite possible de lancer le scraping :
 
 ```sh
-py -m veron_nepveux_project main.py scraping
+py -m veron_nepveux_project scraping
 ```
+
+*NB : l'exécution du scrapping dure au moins 8h*
 
 ou l'estimation :
 
 ```sh
-py -m veron_nepveux_project main.py estimation
+py -m veron_nepveux_project estimation
 ```
 
 Lancer la commande d'estimation abouti à cette interface : 
@@ -162,3 +164,20 @@ Lancer la commande d'estimation abouti à cette interface :
 ![Inter](interface.png)
 
 Lorsque l'utilisateur valide, le modèle précédemment choisi estime le prix prédit de la voiture et le retourne ainsi que le prix d'origine en fournissant la différence de prix entre les deux dans la commande.
+
+---
+## Installation
+
+Pour installer le module, il y a deux manières :
+
+- Depuis GitHub :
+```sh
+py -m pip install git+https://github.com/mathver/VERON_NEPVEUX_PROJECT
+```
+
+- En téléchargeant le dossier :
+```sh
+py -m pip install C:/Users/Downloads/VERON_NEPVEUX_PROJECT
+```
+
+Suite à l'une des ces deux commandes, vous devriez être apte à exécuter les commandes précédemment évoquées.

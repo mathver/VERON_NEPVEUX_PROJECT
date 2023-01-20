@@ -97,11 +97,13 @@ def test_formalisation():
 
 def test_scrap_marque():
     scrap_marque("https://www.spoticar.fr", ("audi", "bmw"), 3)
-    assert exists("donnees_audi.json") and exists("donnees_bmw.json")
+    assert exists("./veron_nepveux_project/donnees_audi.json") and exists(
+        "./veron_nepveux_project/donnees_bmw.json"
+    )
 
 
-# Ce test est aussi fonctionnel pour les cookies et recolt_data
-# Il permet aussi de comprendre lors de son exécution du choix des marques (manque de données)
+# Ce test est aussi fonctionnel pour les cookies et recolt_data.
+# Il permet aussi de comprendre lors de son exécution du choix des marques.
 def test_recolt_data():
     pass
 
