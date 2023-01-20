@@ -24,6 +24,7 @@ from veron_nepveux_project.scraping import Voiture
 import pandas as pd
 from serde.json import to_json
 from typing import Any, Union
+import os
 
 STOCKAGE = "./stockage/"
 
@@ -285,7 +286,8 @@ def charge_meilleur_estimateur() -> Any:
 
     Retourne le modèle extrait du fichier pkl.
     """
-    path = "veron_nepveux_project/meilleur_estimateur.pkl"
+    dir = os.curdir
+    path = dir + "meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
     return est
