@@ -370,7 +370,9 @@ def prix_predit_voiture(
     list_car = []
     est = charge_meilleur_estimateur()
     list_car.append(car)
-    path = veron_nepveux_project.scraping.__file__[:-11]
+    path = veron_nepveux_project.scraping.__file__[
+        :-11
+    ]  # Obliger de passer par cette horrible pôur avoir le bon path du fichier
     f = open(path + "donnees_UI.json", "w")
     f.write(to_json(list_car))
     f.close()

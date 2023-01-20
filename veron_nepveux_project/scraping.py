@@ -17,6 +17,7 @@ from serde.json import to_json
 from dataclasses import dataclass
 from time import sleep
 from typing import Union
+import veron_nepveux_project.scraping
 
 
 @serde
@@ -537,5 +538,6 @@ def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
         sleep(5)
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
         resultat = recolt_data(driver, marque, max)
-        f = open(f"veron_nepveux_project/donnees_{marque}.json", "w")
+        path = veron_nepveux_project.scraping.__file__[:-11]
+        f = open(path + f"donnees_{marque}.json", "w")
         f.write(to_json(resultat))

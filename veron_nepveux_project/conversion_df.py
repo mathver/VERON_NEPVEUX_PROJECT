@@ -10,13 +10,18 @@ from veron_nepveux_project.scraping import Voiture
 import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin
+import veron_nepveux_project.scraping
 
 
 def data_frame_modele(
-    fichier_peugeot: str = "veron_nepveux_project/donnees_peugeot.json",
-    fichier_citroen: str = "veron_nepveux_project/donnees_citroen.json",
-    fichier_fiat: str = "veron_nepveux_project/donnees_fiat.json",
-    fichier_opel: str = "veron_nepveux_project/donnees_opel.json",
+    fichier_peugeot: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_peugeot.json",
+    fichier_citroen: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_citroen.json",
+    fichier_fiat: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_fiat.json",
+    fichier_opel: str = veron_nepveux_project.scraping.__file__[:-11]
+    + "donnees_opel.json",
 ) -> dict:
     """
     # Description
