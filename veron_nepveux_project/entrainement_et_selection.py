@@ -286,7 +286,7 @@ def charge_meilleur_estimateur() -> Any:
 
     Retourne le modèle extrait du fichier pkl.
     """
-    dir = os.curdir
+    dir = os.getcwd()
     path = dir + "meilleur_estimateur.pkl"
     with open(path, "rb") as file:
         est = load(file=file)
