@@ -537,5 +537,5 @@ def scrap_marque(URL: str, marques: list[str], max: int = 601) -> str:
         sleep(5)
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
         resultat = recolt_data(driver, marque, max)
-        f = open(f".\\veron_nepveux_project\\donnees_{marque}.json", "w")
+        f = open(f"veron_nepveux_project/donnees_{marque}.json", "w")
         f.write(to_json(resultat))
